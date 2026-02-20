@@ -272,10 +272,10 @@ struct MediaInfoView: View {
                     dismiss()
                 }) {
                     Image(systemName: "chevron.left")
-                        .font(.system(size: 24))
+                        .font(.system(size: 18, weight: .semibold))
                         .foregroundColor(.primary)
                         .padding(12)
-                        .background(Color(.systemBackground).opacity(0.8))
+                        .background(.ultraThinMaterial)
                         .clipShape(Circle())
                         .circularGradientOutline()
                 }
@@ -600,10 +600,21 @@ struct MediaInfoView: View {
     
     @ViewBuilder
     private var episodesSectionHeader: some View {
-        HStack {
+        HStack(alignment: .center) {
             Text(NSLocalizedString("Episodes", comment: ""))
                 .font(.system(size: 22, weight: .bold))
                 .foregroundColor(.primary)
+            
+            Text("\(currentEpisodeList.count)")
+                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                .foregroundStyle(.secondary)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 3)
+                .background(
+                    Capsule()
+                        .fill(Color.gray.opacity(0.15))
+                )
+            
             Spacer()
             sourceButton
             menuButton
@@ -638,7 +649,7 @@ struct MediaInfoView: View {
     
     @ViewBuilder
     private var flatEpisodeList: some View {
-        VStack(spacing: 15) {
+        VStack(spacing: 10) {
             ForEach(episodeLinks.indices.filter { selectedRange.contains($0) }, id: \.self) { i in
                 let ep = episodeLinks[i]
                 createEpisodeCell(episode: ep, index: i, season: 1)
@@ -650,7 +661,7 @@ struct MediaInfoView: View {
     private var seasonsEpisodeList: some View {
         let seasons = groupedEpisodes()
         if !seasons.isEmpty, selectedSeason < seasons.count {
-            VStack(spacing: 15) {
+            VStack(spacing: 10) {
                 ForEach(seasons[selectedSeason]) { ep in
                     createEpisodeCell(episode: ep, index: selectedSeason, season: selectedSeason + 1)
                 }

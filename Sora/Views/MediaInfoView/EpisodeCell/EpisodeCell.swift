@@ -166,24 +166,104 @@ private extension EpisodeCell {
     
     var episodeCellContent: some View {
         ZStack {
-            HStack {
-                episodeThumbnail
-                episodeInfo
-                Spacer()
-                if case .downloaded = downloadStatus {
-                    downloadedIndicator
-                        .padding(.trailing, 8)
+            HStack(spacing: 12) {
+                // Thumbnail with episode number badge and progress overlay
+                ZStack(alignment: .bottomLeading) {
+                    episodeThumbnail
+                    
+                    // Episode number badge
+                    Text("\(episodeID + 1)")
+                        .font(.system(size: 11, weight: .bold, design: .rounded))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 7)
+                        .padding(.vertical, 3)
+                        .background(
+                            Capsule()
+                                .fill(.ultraThinMaterial)
+                                .environment(\.colorScheme, .dark)
+                        )
+                        .padding(6)
+                    
+                    // Progress bar at bottom of thumbnail
+                    if currentProgress > 0 {
+                        VStack {
+                            Spacer()
+                            GeometryReader { geo in
+                                let remainingTimePercentage = UserDefaults.standard.object(forKey: "remainingTimePercentage") != nil ? UserDefaults.standard.double(forKey: "remainingTimePercentage") : 90.0
+                                let isComplete = currentProgress >= remainingTimePercentage / 100.0
+                                
+                                ZStack(alignment: .leading) {
+                                    Rectangle()
+                                        .fill(Color.white.opacity(0.3))
+                                        .frame(height: 3)
+                                    
+                                    Rectangle()
+                                        .fill(isComplete ? Color.green : Color.accentColor)
+                                        .frame(width: geo.size.width * min(CGFloat(currentProgress), 1.0), height: 3)
+                                }
+                            }
+                            .frame(height: 3)
+                            .clipShape(Capsule())
+                            .padding(.horizontal, 6)
+                            .padding(.bottom, 6)
+                        }
+                    }
                 }
-                CircularProgressBar(progress: currentProgress)
-                    .frame(width: 40, height: 40)
-                    .padding(.trailing, 4)
+                .frame(width: 130, height: 76)
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                
+                // Episode info
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack(spacing: 6) {
+                        Text("Episode \(episodeID + 1)")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundStyle(.primary)
+                        
+                        if isFiller {
+                            Text("FILLER")
+                                .font(.system(size: 9, weight: .bold, design: .rounded))
+                                .tracking(0.5)
+                                .foregroundStyle(.red)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(
+                                    Capsule()
+                                        .fill(Color.red.opacity(colorScheme == .dark ? 0.18 : 0.10))
+                                )
+                                .overlay(
+                                    Capsule()
+                                        .strokeBorder(Color.red.opacity(0.2), lineWidth: 0.5)
+                                )
+                        }
+                        
+                        if case .downloaded = downloadStatus {
+                            Image(systemName: "arrow.down.circle.fill")
+                                .font(.system(size: 12))
+                                .foregroundStyle(.green)
+                        }
+                    }
+                    
+                    if !episodeTitle.isEmpty {
+                        Text(episodeTitle)
+                            .font(.system(size: 13))
+                            .foregroundStyle(.secondary)
+                            .lineLimit(2)
+                    }
+                }
+                
+                Spacer()
+                
+                // Progress indicator (only show when there's progress)
+                if currentProgress > 0 {
+                    CircularProgressBar(progress: currentProgress)
+                        .frame(width: 34, height: 34)
+                }
             }
             .contentShape(Rectangle())
-            .padding(.horizontal, 8)
-            .padding(.vertical, 8)
+            .padding(10)
             .frame(maxWidth: .infinity)
             .background(cellBackground)
-            .clipShape(RoundedRectangle(cornerRadius: 15))
+            .clipShape(RoundedRectangle(cornerRadius: 14))
             .offset(x: swipeOffset + dragState.translation.width)
             .zIndex(1)
             .scaleEffect(dragState.isActive ? 0.98 : 1.0)
@@ -248,18 +328,14 @@ private extension EpisodeCell {
     }
     
     var cellBackground: some View {
-        RoundedRectangle(cornerRadius: 15)
-            .fill(Color(UIColor.systemBackground))
+        RoundedRectangle(cornerRadius: 14)
+            .fill(.ultraThinMaterial)
             .overlay(
-                RoundedRectangle(cornerRadius: 15)
-                    .fill(Color.gray.opacity(0.2))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 15)
-                    .stroke(
+                RoundedRectangle(cornerRadius: 14)
+                    .strokeBorder(
                         LinearGradient(
                             gradient: Gradient(stops: [
-                                .init(color: Color.accentColor.opacity(0.25), location: 0),
+                                .init(color: Color.accentColor.opacity(0.2), location: 0),
                                 .init(color: Color.accentColor.opacity(0), location: 1)
                             ]),
                             startPoint: .top,
@@ -274,8 +350,8 @@ private extension EpisodeCell {
         ZStack {
             AsyncImageView(
                 url: episodeImageUrl.isEmpty ? defaultBannerImage : episodeImageUrl,
-                width: 100,
-                height: 56
+                width: 130,
+                height: 76
             )
             
             if isLoading {
@@ -286,41 +362,43 @@ private extension EpisodeCell {
     }
     
     var episodeInfo: some View {
-        VStack(alignment: .leading) {
-            HStack(spacing: 8) {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(spacing: 6) {
                 Text("Episode \(episodeID + 1)")
-                    .font(.system(size: 15))
-                    .foregroundColor(.primary)
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundStyle(.primary)
                 
                 if isFiller {
-                    Text("Filler")
-                        .font(.system(size: 12, weight: .semibold))
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
+                    Text("FILLER")
+                        .font(.system(size: 9, weight: .bold, design: .rounded))
+                        .tracking(0.5)
+                        .foregroundStyle(.red)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
                         .background(
                             Capsule()
-                                .fill(Color.red.opacity(colorScheme == .dark ? 0.20 : 0.10))
+                                .fill(Color.red.opacity(colorScheme == .dark ? 0.18 : 0.10))
                         )
                         .overlay(
                             Capsule()
-                                .stroke(Color.red.opacity(0.24), lineWidth: 0.6)
+                                .strokeBorder(Color.red.opacity(0.2), lineWidth: 0.5)
                         )
-                        .foregroundColor(.red)
                 }
             }
             
             if !episodeTitle.isEmpty {
                 Text(episodeTitle)
                     .font(.system(size: 13))
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
             }
         }
     }
     
     var downloadedIndicator: some View {
-        Image(systemName: "externaldrive.fill.badge.checkmark")
-            .foregroundColor(.accentColor)
-            .font(.system(size: 18))
+        Image(systemName: "arrow.down.circle.fill")
+            .foregroundStyle(.green)
+            .font(.system(size: 14))
     }
     
     var contextMenuContent: some View {
@@ -1068,14 +1146,14 @@ private struct ActionButton: View {
     
     var body: some View {
         Button(action: action) {
-            VStack(spacing: 2) {
+            VStack(spacing: 4) {
                 Image(systemName: icon)
-                    .font(.title3)
+                    .font(.system(size: 16, weight: .semibold))
                 Text(label)
-                    .font(.caption2)
+                    .font(.system(size: 10, weight: .medium))
             }
         }
-        .foregroundColor(color)
+        .foregroundStyle(color)
         .frame(width: width)
     }
 }
@@ -1091,9 +1169,9 @@ private struct AsyncImageView: View {
                 if let image = state.imageContainer?.image {
                     Image(uiImage: image)
                         .resizable()
-                        .aspectRatio(16/9, contentMode: .fill)
+                        .aspectRatio(contentMode: .fill)
                         .frame(width: width, height: height)
-                        .cornerRadius(8)
+                        .clipped()
                 } else if state.error != nil {
                     placeholderView
                         .onAppear {
@@ -1112,6 +1190,10 @@ private struct AsyncImageView: View {
         Rectangle()
             .fill(.tertiary)
             .frame(width: width, height: height)
-            .cornerRadius(8)
+            .overlay(
+                Image(systemName: "play.rectangle.fill")
+                    .font(.system(size: 20))
+                    .foregroundStyle(.quaternary)
+            )
     }
 }
