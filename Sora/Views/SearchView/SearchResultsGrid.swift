@@ -129,7 +129,7 @@ struct SearchResultsGrid: View {
                 }
             }
             .padding(.top)
-            .padding()
+            .padding(.horizontal)
             
             if showBookmarkToast {
                 VStack {

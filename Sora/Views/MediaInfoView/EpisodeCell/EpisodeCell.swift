@@ -252,11 +252,8 @@ private extension EpisodeCell {
                 
                 Spacer()
                 
-                // Progress indicator (only show when there's progress)
-                if currentProgress > 0 {
-                    CircularProgressBar(progress: currentProgress)
-                        .frame(width: 34, height: 34)
-                }
+                CircularProgressBar(progress: currentProgress)
+                    .frame(width: 34, height: 34)
             }
             .contentShape(Rectangle())
             .padding(10)
