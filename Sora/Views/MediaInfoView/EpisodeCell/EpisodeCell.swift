@@ -189,7 +189,6 @@ private extension EpisodeCell {
                         VStack {
                             Spacer()
                             GeometryReader { geo in
-                                let remainingTimePercentage = UserDefaults.standard.object(forKey: "remainingTimePercentage") != nil ? UserDefaults.standard.double(forKey: "remainingTimePercentage") : 90.0
                                 let isComplete = currentProgress >= remainingTimePercentage / 100.0
                                 
                                 ZStack(alignment: .leading) {
@@ -359,46 +358,6 @@ private extension EpisodeCell {
                     .progressViewStyle(CircularProgressViewStyle())
             }
         }
-    }
-    
-    var episodeInfo: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            HStack(spacing: 6) {
-                Text("Episode \(episodeID + 1)")
-                    .font(.system(size: 15, weight: .semibold))
-                    .foregroundStyle(.primary)
-                
-                if isFiller {
-                    Text("FILLER")
-                        .font(.system(size: 9, weight: .bold, design: .rounded))
-                        .tracking(0.5)
-                        .foregroundStyle(.red)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .background(
-                            Capsule()
-                                .fill(Color.red.opacity(colorScheme == .dark ? 0.18 : 0.10))
-                        )
-                        .overlay(
-                            Capsule()
-                                .strokeBorder(Color.red.opacity(0.2), lineWidth: 0.5)
-                        )
-                }
-            }
-            
-            if !episodeTitle.isEmpty {
-                Text(episodeTitle)
-                    .font(.system(size: 13))
-                    .foregroundStyle(.secondary)
-                    .lineLimit(2)
-            }
-        }
-    }
-    
-    var downloadedIndicator: some View {
-        Image(systemName: "arrow.down.circle.fill")
-            .foregroundStyle(.green)
-            .font(.system(size: 14))
     }
     
     var contextMenuContent: some View {

@@ -9,9 +9,9 @@ import SwiftUI
 
 struct CircularProgressBar: View {
     var progress: Double
+    @AppStorage("remainingTimePercentage") private var remainingTimePercentage: Double = 90.0
     
     var body: some View {
-        let remainingTimePercentage = UserDefaults.standard.object(forKey: "remainingTimePercentage") != nil ? UserDefaults.standard.double(forKey: "remainingTimePercentage") : 90.0
         let threshold = remainingTimePercentage / 100.0
         let isComplete = progress >= threshold
         
