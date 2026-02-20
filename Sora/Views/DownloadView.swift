@@ -620,7 +620,7 @@ struct SummaryItem: View {
         VStack(spacing: 6) {
             Image(systemName: icon)
                 .font(.system(size: 20))
-                .foregroundStyle(.accentColor)
+                .foregroundColor(.accentColor)
 
             if !value.isEmpty {
                 Text(value)
