@@ -348,19 +348,20 @@ struct MediaInfoView: View {
     
     @ViewBuilder
     private var gradientOverlay: some View {
+        let bgColor = colorScheme == .dark ? Color.black : Color.white
         LinearGradient(
             gradient: Gradient(stops: [
-                .init(color: (colorScheme == .dark ? Color.black : Color.white).opacity(0.0), location: 0.0),
-                .init(color: (colorScheme == .dark ? Color.black : Color.white).opacity(0.5), location: 0.2),
-                .init(color: (colorScheme == .dark ? Color.black : Color.white).opacity(0.8), location: 0.5),
-                .init(color: (colorScheme == .dark ? Color.black : Color.white), location: 1.0)
+                .init(color: bgColor.opacity(0.0), location: 0.0),
+                .init(color: bgColor.opacity(0.5), location: 0.2),
+                .init(color: bgColor.opacity(0.8), location: 0.5),
+                .init(color: bgColor, location: 1.0)
             ]),
             startPoint: .top,
             endPoint: .bottom
         )
         .frame(height: 300)
         .clipShape(RoundedRectangle(cornerRadius: 0))
-        .shadow(color: (colorScheme == .dark ? Color.black : Color.white).opacity(1), radius: 10, x: 0, y: 10)
+        .shadow(color: bgColor, radius: 10, x: 0, y: 10)
     }
     
     @ViewBuilder

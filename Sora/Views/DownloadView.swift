@@ -395,13 +395,13 @@ struct CustomDownloadHeader: View {
                             .strokeBorder(
                                 LinearGradient(
                                     gradient: Gradient(stops: [
-                                        .init(color: Color.accentColor.opacity(0.25), location: 0),
+                                        .init(color: Color.accentColor.opacity(0.2), location: 0),
                                         .init(color: Color.accentColor.opacity(0), location: 1)
                                     ]),
                                     startPoint: .top,
                                     endPoint: .bottom
                                 ),
-                                lineWidth: 1.5
+                                lineWidth: 0.5
                             )
                     )
                 }
@@ -515,22 +515,6 @@ struct DownloadSectionView: View {
                     EnhancedActiveDownloadCard(download: download)
                 }
             }
-            .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-            .overlay(
-                RoundedRectangle(cornerRadius: 16)
-                    .strokeBorder(
-                        LinearGradient(
-                            gradient: Gradient(stops: [
-                                .init(color: Color.accentColor.opacity(0.3), location: 0),
-                                .init(color: Color.accentColor.opacity(0), location: 1)
-                            ]),
-                            startPoint: .top,
-                            endPoint: .bottom
-                        ),
-                        lineWidth: 0.5
-                    )
-            )
             .padding(.horizontal, 20)
         }
     }
@@ -593,7 +577,7 @@ struct DownloadSummaryCard: View {
                 .strokeBorder(
                     LinearGradient(
                         gradient: Gradient(stops: [
-                            .init(color: Color.accentColor.opacity(0.3), location: 0),
+                            .init(color: Color.accentColor.opacity(0.2), location: 0),
                             .init(color: Color.accentColor.opacity(0), location: 1)
                         ]),
                         startPoint: .top,
@@ -825,19 +809,15 @@ struct EnhancedActiveDownloadCard: View {
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .fill(Color(UIColor.systemBackground))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(Color.gray.opacity(0.2))
-                )
+                .fill(.ultraThinMaterial)
         )
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: 14)
-                .stroke(
+                .strokeBorder(
                     LinearGradient(
                         gradient: Gradient(stops: [
-                            .init(color: Color.accentColor.opacity(0.25), location: 0),
+                            .init(color: Color.accentColor.opacity(0.2), location: 0),
                             .init(color: Color.accentColor.opacity(0), location: 1)
                         ]),
                         startPoint: .top,
@@ -973,7 +953,7 @@ struct EnhancedDownloadGroupCard: View {
                     .strokeBorder(
                         LinearGradient(
                             gradient: Gradient(stops: [
-                                .init(color: Color.accentColor.opacity(0.3), location: 0),
+                                .init(color: Color.accentColor.opacity(0.2), location: 0),
                                 .init(color: Color.accentColor.opacity(0), location: 1)
                             ]),
                             startPoint: .top,
@@ -1069,7 +1049,7 @@ struct EnhancedShowEpisodesView: View {
                         .font(.system(size: 24))
                         .foregroundColor(.primary)
                         .padding(12)
-                        .background(Color.gray.opacity(0.2))
+                        .background(.ultraThinMaterial)
                         .clipShape(Circle())
                         .circularGradientOutline()
                 }
@@ -1153,19 +1133,20 @@ struct EnhancedShowEpisodesView: View {
     
     @ViewBuilder
     private var gradientOverlay: some View {
+        let bgColor = colorScheme == .dark ? Color.black : Color.white
         LinearGradient(
             gradient: Gradient(stops: [
-                .init(color: (colorScheme == .dark ? Color.black : Color.white).opacity(0.0), location: 0.0),
-                .init(color: (colorScheme == .dark ? Color.black : Color.white).opacity(0.5), location: 0.2),
-                .init(color: (colorScheme == .dark ? Color.black : Color.white).opacity(0.8), location: 0.5),
-                .init(color: (colorScheme == .dark ? Color.black : Color.white), location: 1.0)
+                .init(color: bgColor.opacity(0.0), location: 0.0),
+                .init(color: bgColor.opacity(0.5), location: 0.2),
+                .init(color: bgColor.opacity(0.8), location: 0.5),
+                .init(color: bgColor, location: 1.0)
             ]),
             startPoint: .top,
             endPoint: .bottom
         )
         .frame(height: 300)
         .clipShape(RoundedRectangle(cornerRadius: 0))
-        .shadow(color: (colorScheme == .dark ? Color.black : Color.white).opacity(1), radius: 10, x: 0, y: 10)
+        .shadow(color: bgColor, radius: 10, x: 0, y: 10)
     }
     
     @ViewBuilder

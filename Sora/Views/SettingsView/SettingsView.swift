@@ -33,11 +33,13 @@ fileprivate struct SettingsNavigationRow: View {
             Spacer()
             
             if isExternal {
-                Image(systemName: "safari")
-                    .foregroundStyle(.gray)
+                Image(systemName: "arrow.up.right")
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.tertiary)
             } else {
                 Image(systemName: "chevron.right")
-                    .foregroundStyle(.gray)
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(.tertiary)
             }
         }
         .padding(.horizontal, 16)
@@ -81,7 +83,7 @@ fileprivate struct ModulePreviewRow: View {
                     
                     Text("Tap to manage your modules")
                         .font(.subheadline)
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.secondary)
                         .lineLimit(1)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -98,7 +100,7 @@ fileprivate struct ModulePreviewRow: View {
                     
                     Text("Tap to select a module")
                         .font(.subheadline)
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.secondary)
                         .lineLimit(1)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -106,7 +108,8 @@ fileprivate struct ModulePreviewRow: View {
             }
             
             Image(systemName: "chevron.right")
-                .foregroundStyle(.gray)
+                .font(.system(size: 13, weight: .semibold))
+                .foregroundStyle(.tertiary)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 16)
@@ -117,7 +120,7 @@ fileprivate struct ModulePreviewRow: View {
                 .strokeBorder(
                     LinearGradient(
                         gradient: Gradient(stops: [
-                            .init(color: Color.accentColor.opacity(0.3), location: 0),
+                            .init(color: Color.accentColor.opacity(0.2), location: 0),
                             .init(color: Color.accentColor.opacity(0), location: 1)
                         ]),
                         startPoint: .top,
@@ -199,7 +202,7 @@ struct SettingsView: View {
                                 .strokeBorder(
                                     LinearGradient(
                                         gradient: Gradient(stops: [
-                                            .init(color: Color.accentColor.opacity(0.3), location: 0),
+                                            .init(color: Color.accentColor.opacity(0.2), location: 0),
                                             .init(color: Color.accentColor.opacity(0), location: 1)
                                         ]),
                                         startPoint: .top,
@@ -240,7 +243,7 @@ struct SettingsView: View {
                                 .strokeBorder(
                                     LinearGradient(
                                         gradient: Gradient(stops: [
-                                            .init(color: Color.accentColor.opacity(0.3), location: 0),
+                                            .init(color: Color.accentColor.opacity(0.2), location: 0),
                                             .init(color: Color.accentColor.opacity(0), location: 1)
                                         ]),
                                         startPoint: .top,
@@ -275,12 +278,13 @@ struct SettingsView: View {
                                         .padding(.trailing, 4)
                                     
                                     Text(NSLocalizedString("Sora GitHub Repository", comment: ""))
-                                        .foregroundStyle(.gray)
+                                        .foregroundStyle(.secondary)
                                     
                                     Spacer()
                                     
-                                    Image(systemName: "safari")
-                                        .foregroundStyle(.gray)
+                                    Image(systemName: "arrow.up.right")
+                                        .font(.system(size: 13, weight: .semibold))
+                                        .foregroundStyle(.tertiary)
                                 }
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 12)
@@ -297,12 +301,13 @@ struct SettingsView: View {
                                         .padding(.trailing, 4)
                                     
                                     Text(NSLocalizedString("Join the Discord", comment: ""))
-                                        .foregroundStyle(.gray)
+                                        .foregroundStyle(.secondary)
                                     
                                     Spacer()
                                     
-                                    Image(systemName: "safari")
-                                        .foregroundStyle(.gray)
+                                    Image(systemName: "arrow.up.right")
+                                        .font(.system(size: 13, weight: .semibold))
+                                        .foregroundStyle(.tertiary)
                                 }
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 12)
@@ -314,7 +319,7 @@ struct SettingsView: View {
                                     icon: "exclamationmark.circle.fill",
                                     titleKey: "Report an Issue",
                                     isExternal: true,
-                                    textColor: .gray
+                                    textColor: .secondary
                                 )
                             }
                             Divider().padding(.horizontal, 16)
@@ -324,7 +329,7 @@ struct SettingsView: View {
                                     icon: "doc.text.fill",
                                     titleKey: "License (GPLv3.0)",
                                     isExternal: true,
-                                    textColor: .gray
+                                    textColor: .secondary
                                 )
                             }
                         }
@@ -335,7 +340,7 @@ struct SettingsView: View {
                                 .strokeBorder(
                                     LinearGradient(
                                         gradient: Gradient(stops: [
-                                            .init(color: Color.accentColor.opacity(0.3), location: 0),
+                                            .init(color: Color.accentColor.opacity(0.2), location: 0),
                                             .init(color: Color.accentColor.opacity(0), location: 1)
                                         ]),
                                         startPoint: .top,

@@ -136,7 +136,7 @@ struct SearchBar: View {
                     .strokeBorder(
                         LinearGradient(
                             gradient: Gradient(stops: [
-                                .init(color: Color.accentColor.opacity(0.25), location: 0),
+                                .init(color: Color.accentColor.opacity(0.2), location: 0),
                                 .init(color: Color.accentColor.opacity(0), location: 1)
                             ]),
                             startPoint: .top,
