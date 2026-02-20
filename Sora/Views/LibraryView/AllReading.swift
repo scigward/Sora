@@ -245,17 +245,19 @@ struct AllReadingView: View {
     private var emptyStateView: some View {
         VStack(spacing: 16) {
             Image(systemName: "book.closed")
-                .font(.system(size: 50))
-                .foregroundColor(.gray)
+                .font(.system(size: 48))
+                .foregroundStyle(.tertiary)
             
-            Text("No Reading History")
-                .font(.title2)
-                .fontWeight(.bold)
-            
-            Text("Books you're reading will appear here")
-                .font(.body)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
+            VStack(spacing: 6) {
+                Text("No Reading History")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                
+                Text("Books you're reading will appear here")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+            }
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 60)

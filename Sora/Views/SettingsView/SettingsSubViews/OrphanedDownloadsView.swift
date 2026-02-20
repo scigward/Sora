@@ -101,7 +101,8 @@ struct OrphanedDownloadsView: View {
         VStack(alignment: .leading, spacing: 4) {
             Text(NSLocalizedString("ORPHANED FILES", comment: ""))
                 .font(.footnote)
-                .foregroundColor(.gray)
+                .fontWeight(.medium)
+                .foregroundStyle(.secondary)
                 .padding(.horizontal, 20)
             
             orphanedFilesContainer
