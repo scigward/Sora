@@ -77,7 +77,7 @@ struct SearchHistoryRow: View {
             Button(action: onDelete) {
                 Image(systemName: "xmark")
                     .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(Color.tertiary)
+                    .foregroundStyle(.tertiary)
             }
         }
         .padding(.horizontal, 16)
