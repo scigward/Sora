@@ -286,10 +286,7 @@ struct TabBar: View {
         }
         .offset(y: shouldSlideUp ? -keyboardHeight + 40 : 0)
         .animation(.spring(response: 0.3, dampingFraction: 0.8), value: shouldSlideUp)
-        .onChange(of: keyboardHeight) { newValue in
-            withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) {
-            }
-        }
+        .onChange(of: keyboardHeight) { _ in }
         .onAppear {
             capsuleOffset = CGFloat(selectedTab) * tabWidth
             NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in

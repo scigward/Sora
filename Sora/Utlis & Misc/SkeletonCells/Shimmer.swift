@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct Shimmer: ViewModifier {
+    @Environment(\.colorScheme) private var colorScheme
     @State private var phase: CGFloat = 0
     
     func body(content: Content) -> some View {
@@ -36,12 +37,19 @@ struct Shimmer: ViewModifier {
     }
     
     private var shimmerGradient: LinearGradient {
-        LinearGradient(
+        let highlightColor = colorScheme == .dark
+            ? Color.white.opacity(0.08)
+            : Color.white.opacity(0.6)
+        let peakColor = colorScheme == .dark
+            ? Color.white.opacity(0.15)
+            : Color.white.opacity(0.8)
+        
+        return LinearGradient(
             stops: [
                 .init(color: .clear, location: 0),
-                .init(color: .white.opacity(0.1), location: 0.3),
-                .init(color: .white.opacity(0.6), location: 0.5),
-                .init(color: .white.opacity(0.1), location: 0.7),
+                .init(color: highlightColor, location: 0.3),
+                .init(color: peakColor, location: 0.5),
+                .init(color: highlightColor, location: 0.7),
                 .init(color: .clear, location: 1)
             ],
             startPoint: .leading,

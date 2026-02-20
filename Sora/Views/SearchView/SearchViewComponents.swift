@@ -119,7 +119,6 @@ struct ModuleSelectorMenu: View {
             }
             .padding(.horizontal, 12)
             .padding(.vertical, 8)
-            .background(Color(.systemGray6).opacity(0))
             .cornerRadius(12)
         }
     }
@@ -142,20 +141,23 @@ struct SearchContent: View {
     var body: some View {
         VStack(spacing: 0) {
             if selectedModule == nil {
-                VStack(spacing: 8) {
+                VStack(spacing: 12) {
                     Image(systemName: "questionmark.app")
-                        .font(.largeTitle)
-                        .foregroundColor(.secondary)
-                    Text("No Module Selected")
-                        .font(.headline)
-                    Text("Please select a module from settings")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        .font(.system(size: 40))
+                        .foregroundStyle(.tertiary)
+                    
+                    VStack(spacing: 4) {
+                        Text("No Module Selected")
+                            .font(.headline)
+                            .foregroundStyle(.primary)
+                        Text("Please select a module from settings")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
                 }
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(Color(.systemBackground))
-                .shadow(color: Color.black.opacity(0.1), radius: 2, y: 1)
+                .padding(.top, 40)
             }
             
             if searchQuery.isEmpty {

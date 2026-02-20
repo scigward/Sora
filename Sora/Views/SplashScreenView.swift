@@ -22,16 +22,17 @@ struct SplashScreenView: View {
                         .scaledToFit()
                         .frame(width: 200, height: 200)
                         .cornerRadius(24)
-                        .scaleEffect(isAnimating ? 1.2 : 1.0)
+                        .shadow(color: .accentColor.opacity(0.3), radius: 20, y: 8)
+                        .scaleEffect(isAnimating ? 1.0 : 0.85)
                         .opacity(isAnimating ? 1.0 : 0.0)
                 }
                 .onAppear {
-                    withAnimation(.easeIn(duration: 0.5)) {
+                    withAnimation(.spring(response: 0.6, dampingFraction: 0.7)) {
                         isAnimating = true
                     }
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        withAnimation(.easeOut(duration: 0.5)) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                        withAnimation(.easeOut(duration: 0.4)) {
                             showMainApp = true
                         }
                     }

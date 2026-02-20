@@ -142,15 +142,15 @@ struct DownloadView: View {
     }
     
     private var emptyActiveDownloadsView: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 16) {
             Image(systemName: "arrow.down.circle")
-                .font(.largeTitle)
-                .foregroundStyle(.secondary)
+                .font(.system(size: 48))
+                .foregroundStyle(.tertiary)
             
-            VStack(spacing: 8) {
+            VStack(spacing: 6) {
                 Text(NSLocalizedString("No Active Downloads", comment: ""))
-                    .font(.title2)
-                    .fontWeight(.medium)
+                    .font(.title3)
+                    .fontWeight(.semibold)
                     .foregroundStyle(.primary)
                 
                 Text(NSLocalizedString("Actively downloading media can be tracked from here.", comment: ""))
@@ -164,15 +164,15 @@ struct DownloadView: View {
     }
     
     private var emptyDownloadsView: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "arrow.down.circle")                                    
-                .font(.largeTitle)
-                .foregroundStyle(.secondary)
+        VStack(spacing: 16) {
+            Image(systemName: "arrow.down.circle")
+                .font(.system(size: 48))
+                .foregroundStyle(.tertiary)
             
-            VStack(spacing: 8) {
+            VStack(spacing: 6) {
                 Text(NSLocalizedString("No Downloads", comment: ""))
-                    .font(.title2)
-                    .fontWeight(.medium)
+                    .font(.title3)
+                    .fontWeight(.semibold)
                     .foregroundStyle(.primary)
                 
                 Text(NSLocalizedString("Your downloaded episodes will appear here", comment: ""))
@@ -734,47 +734,47 @@ struct EnhancedActiveDownloadCard: View {
                                 .aspectRatio(contentMode: .fill)
                                 .clipped()
                         } else {
-                            Rectangle().fill(Color(white: 0.2))
+                            Rectangle().fill(.tertiary)
                         }
                     }
                 } else {
-                    Rectangle().fill(Color(white: 0.2))
+                    Rectangle().fill(.tertiary)
                         .overlay(
                             Image(systemName: "photo")
-                                .foregroundColor(.gray)
+                                .foregroundColor(.secondary)
                         )
                 }
             }
             .frame(width: 56, height: 56)
-            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             
             // Center VStack
             VStack(alignment: .leading, spacing: 4) {
                 Text(download.title ?? download.originalURL.lastPathComponent)
                     .font(.headline)
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary)
                     .lineLimit(1)
                 
                 HStack {
                     Text("\(Int(currentProgress * 100))%")
                         .font(.subheadline)
                         .fontWeight(.bold)
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                     Spacer()
                     HStack(spacing: 6) {
                         Circle()
                             .fill(Color.green)
-                            .frame(width: 10, height: 10)
+                            .frame(width: 8, height: 8)
                         Text(statusText)
                             .font(.subheadline)
                             .fontWeight(.semibold)
-                            .foregroundColor(Color(white: 0.7))
+                            .foregroundColor(.secondary)
                             .lineLimit(1)
                     }
                 }
                 
                 ProgressView(value: currentProgress)
-                    .progressViewStyle(LinearProgressViewStyle(tint: Color(white: 0.7)))
+                    .progressViewStyle(LinearProgressViewStyle(tint: .accentColor))
                     .frame(height: 4)
                     .cornerRadius(2)
             }

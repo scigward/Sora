@@ -182,15 +182,19 @@ struct LibraryView: View {
             .padding(.bottom, 10)
             
             if continueWatchingItems.isEmpty {
-                VStack(spacing: 8) {
+                VStack(spacing: 12) {
                     Image(systemName: "play.circle")
-                        .font(.largeTitle)
-                        .foregroundColor(.secondary)
-                    Text(LocalizedStringKey("Nothing to Continue Watching"))
-                        .font(.headline)
-                    Text(LocalizedStringKey("Your recently watched content will appear here"))
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        .font(.system(size: 40))
+                        .foregroundStyle(.tertiary)
+                    
+                    VStack(spacing: 4) {
+                        Text(LocalizedStringKey("Nothing to Continue Watching"))
+                            .font(.headline)
+                            .foregroundStyle(.primary)
+                        Text(LocalizedStringKey("Your recently watched content will appear here"))
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
                 }
                 .padding()
                 .frame(maxWidth: .infinity)
@@ -235,15 +239,19 @@ struct LibraryView: View {
             .padding(.bottom, 10)
             
             if continueReadingItems.isEmpty {
-                VStack(spacing: 8) {
+                VStack(spacing: 12) {
                     Image(systemName: "book.closed")
-                        .font(.largeTitle)
-                        .foregroundColor(.secondary)
-                    Text(LocalizedStringKey("Nothing to Continue Reading"))
-                        .font(.headline)
-                    Text(LocalizedStringKey("Your recently read novels will appear here"))
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                        .font(.system(size: 40))
+                        .foregroundStyle(.tertiary)
+                    
+                    VStack(spacing: 4) {
+                        Text(LocalizedStringKey("Nothing to Continue Reading"))
+                            .font(.headline)
+                            .foregroundStyle(.primary)
+                        Text(LocalizedStringKey("Your recently read novels will appear here"))
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
                 }
                 .padding()
                 .frame(maxWidth: .infinity)

@@ -147,10 +147,11 @@ struct SettingsView: View {
                         .padding(.horizontal, 20)
                         .padding(.top, 16)
                     
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 6) {
                         Text("MODULES")
                             .font(.footnote)
-                            .foregroundStyle(.gray)
+                            .fontWeight(.medium)
+                            .foregroundStyle(.secondary)
                             .padding(.horizontal, 20)
                         
                         NavigationLink(destination: SettingsViewModule().navigationBarBackButtonHidden(false)) {
@@ -159,10 +160,11 @@ struct SettingsView: View {
                         .padding(.horizontal, 20)
                     }
                     
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 6) {
                         Text("MAIN SETTINGS")
                             .font(.footnote)
-                            .foregroundStyle(.gray)
+                            .fontWeight(.medium)
+                            .foregroundStyle(.secondary)
                             .padding(.horizontal, 20)
                         
                         VStack(spacing: 0) {
@@ -209,10 +211,11 @@ struct SettingsView: View {
                         .padding(.horizontal, 20)
                     }
                     
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 6) {
                         Text("DATA & LOGS")
                             .font(.footnote)
-                            .foregroundStyle(.gray)
+                            .fontWeight(.medium)
+                            .foregroundStyle(.secondary)
                             .padding(.horizontal, 20)
                         
                         VStack(spacing: 0) {
@@ -249,10 +252,11 @@ struct SettingsView: View {
                         .padding(.horizontal, 20)
                     }
                     
-                    VStack(alignment: .leading, spacing: 4) {
+                    VStack(alignment: .leading, spacing: 6) {
                         Text(NSLocalizedString("INFOS", comment: ""))
                             .font(.footnote)
-                            .foregroundStyle(.gray)
+                            .fontWeight(.medium)
+                            .foregroundStyle(.secondary)
                             .padding(.horizontal, 20)
                         
                         VStack(spacing: 0) {
