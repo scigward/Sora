@@ -461,10 +461,10 @@ struct TabButton: View {
             HStack(spacing: 6) {
                 Image(systemName: isSelected ? selectedIcon : icon)
                     .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(isSelected ? .white : .secondary)
+                    .foregroundColor(isSelected ? .white : .secondary)
                 Text(title)
                     .font(.system(size: 14, weight: .semibold))
-                    .foregroundStyle(isSelected ? .white : .secondary)
+                    .foregroundColor(isSelected ? .white : .secondary)
             }
             .frame(maxWidth: .infinity)
             .padding(.vertical, 10)
