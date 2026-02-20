@@ -1240,7 +1240,7 @@ struct EnhancedShowEpisodesView: View {
                     .fontWeight(.medium)
                     .foregroundColor(.secondary)
             }
-            VStack(spacing: 8) {
+            VStack(spacing: 10) {
                 ForEach(Array(sortedEpisodes.enumerated()), id: \.element.id) { index, asset in
                     EnhancedEpisodeRow(
                         asset: asset,
@@ -1313,75 +1313,98 @@ struct EnhancedEpisodeRow: View {
     let onDelete: (DownloadedAsset) -> Void
 
     @Environment(\.colorScheme) private var colorScheme
-    private var fillerBadgeOpacity: Double { colorScheme == .dark ? 0.18 : 0.12 }
+    @AppStorage("remainingTimePercentage") private var remainingTimePercentage: Double = 90.0
+    @State private var currentProgress: Double = 0.0
+
     var body: some View {
-        HStack {
-            // Thumbnail
-            Group {
-                if let backdropURL = asset.metadata?.backdropURL ?? asset.metadata?.posterURL {
-                    LazyImage(url: backdropURL) { state in
-                        if let uiImage = state.imageContainer?.image {
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .aspectRatio(16/9, contentMode: .fill)
-                        } else {
-                            Rectangle()
-                                .fill(.tertiary)
-                                .overlay(
-                                    Image(systemName: "photo")
-                                        .foregroundColor(.secondary)
-                                )
+        HStack(spacing: 12) {
+            // Thumbnail with episode number badge and progress overlay
+            ZStack(alignment: .bottomLeading) {
+                thumbnailImage
+                
+                // Episode number badge
+                Text("\(asset.metadata?.episode ?? 0)")
+                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 7)
+                    .padding(.vertical, 3)
+                    .background(
+                        Capsule()
+                            .fill(.ultraThinMaterial)
+                            .environment(\.colorScheme, .dark)
+                    )
+                    .padding(6)
+                
+                // Progress bar at bottom of thumbnail
+                if currentProgress > 0 {
+                    VStack {
+                        Spacer()
+                        GeometryReader { geo in
+                            let isComplete = currentProgress >= remainingTimePercentage / 100.0
+                            
+                            ZStack(alignment: .leading) {
+                                Rectangle()
+                                    .fill(Color.white.opacity(0.3))
+                                    .frame(height: 3)
+                                
+                                Rectangle()
+                                    .fill(isComplete ? Color.green : Color.accentColor)
+                                    .frame(width: geo.size.width * min(CGFloat(currentProgress), 1.0), height: 3)
+                            }
                         }
+                        .frame(height: 3)
+                        .clipShape(Capsule())
+                        .padding(.horizontal, 6)
+                        .padding(.bottom, 6)
                     }
-                } else {
-                    Rectangle()
-                        .fill(.tertiary)
-                        .overlay(
-                            Image(systemName: "photo")
-                                .foregroundColor(.secondary)
-                        )
                 }
             }
-            .frame(width: 100, height: 56)
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-
-            VStack(alignment: .leading) {
-                HStack(spacing: 8) {
+            .frame(width: 130, height: 76)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            
+            // Episode info
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(spacing: 6) {
                     Text("Episode \(asset.metadata?.episode ?? 0)")
-                        .font(.system(size: 15))
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundColor(.primary)
+                    
                     if asset.metadata?.isFiller == true {
-                        Text("Filler")
-                            .font(.system(size: 12, weight: .semibold))
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(Color.red.opacity(fillerBadgeOpacity), in: Capsule())
+                        Text("FILLER")
+                            .font(.system(size: 9, weight: .bold, design: .rounded))
+                            .tracking(0.5)
+                            .foregroundColor(.red)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(
+                                Capsule()
+                                    .fill(Color.red.opacity(colorScheme == .dark ? 0.18 : 0.10))
+                            )
                             .overlay(
                                 Capsule()
-                                    .stroke(Color.red.opacity(0.24), lineWidth: 0.6)
+                                    .strokeBorder(Color.red.opacity(0.2), lineWidth: 0.5)
                             )
-                            .foregroundColor(.red)
                     }
                 }
+                
                 if let title = asset.metadata?.title {
                     Text(title)
                         .font(.system(size: 13))
                         .foregroundColor(.secondary)
-                        .lineLimit(1)
+                        .lineLimit(2)
                 }
             }
 
             Spacer()
 
-            CircularProgressBar(progress: 0.0)
-                .frame(width: 40, height: 40)
-                .padding(.trailing, 4)
+            CircularProgressBar(progress: currentProgress)
+                .frame(width: 34, height: 34)
         }
         .contentShape(Rectangle())
-        .padding(.horizontal, 8)
-        .padding(.vertical, 8)
+        .padding(10)
         .frame(maxWidth: .infinity)
         .background(cellBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 15))
+        .clipShape(RoundedRectangle(cornerRadius: 14))
         .swipeActions(edge: .trailing) {
             Button(role: .destructive, action: {
                 onDelete(asset)
@@ -1392,21 +1415,64 @@ struct EnhancedEpisodeRow: View {
         .onTapGesture {
             onPlay(asset)
         }
+        .onAppear {
+            updateProgress()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("episodeProgressChanged"))) { _ in
+            updateProgress()
+        }
+    }
+    
+    private func updateProgress() {
+        let key = asset.originalURL.absoluteString
+        let lastPlayedTime = UserDefaults.standard.double(forKey: "lastPlayedTime_\(key)")
+        let totalTime = UserDefaults.standard.double(forKey: "totalTime_\(key)")
+        currentProgress = totalTime > 0 ? min(lastPlayedTime / totalTime, 1.0) : 0
+    }
+    
+    private var thumbnailImage: some View {
+        Group {
+            if let backdropURL = asset.metadata?.backdropURL ?? asset.metadata?.posterURL {
+                LazyImage(url: backdropURL) { state in
+                    if let uiImage = state.imageContainer?.image {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 130, height: 76)
+                            .clipped()
+                    } else {
+                        Rectangle()
+                            .fill(.tertiary)
+                            .frame(width: 130, height: 76)
+                            .overlay(
+                                Image(systemName: "play.rectangle.fill")
+                                    .font(.system(size: 20))
+                                    .foregroundColor(.secondary)
+                            )
+                    }
+                }
+            } else {
+                Rectangle()
+                    .fill(.tertiary)
+                    .frame(width: 130, height: 76)
+                    .overlay(
+                        Image(systemName: "play.rectangle.fill")
+                            .font(.system(size: 20))
+                            .foregroundColor(.secondary)
+                    )
+            }
+        }
     }
 
     private var cellBackground: some View {
-        RoundedRectangle(cornerRadius: 15)
-            .fill(Color(UIColor.systemBackground))
+        RoundedRectangle(cornerRadius: 14)
+            .fill(.ultraThinMaterial)
             .overlay(
-                RoundedRectangle(cornerRadius: 15)
-                    .fill(Color.gray.opacity(0.2))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 15)
-                    .stroke(
+                RoundedRectangle(cornerRadius: 14)
+                    .strokeBorder(
                         LinearGradient(
                             gradient: Gradient(stops: [
-                                .init(color: Color.accentColor.opacity(0.25), location: 0),
+                                .init(color: Color.accentColor.opacity(0.2), location: 0),
                                 .init(color: Color.accentColor.opacity(0), location: 1)
                             ]),
                             startPoint: .top,

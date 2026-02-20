@@ -129,7 +129,6 @@ struct SearchView: View {
                         onClearHistory: clearSearchHistory
                     )
                 }
-                .scrollViewBottomPadding()
                 .simultaneousGesture(
                     DragGesture().onChanged { _ in
                         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
