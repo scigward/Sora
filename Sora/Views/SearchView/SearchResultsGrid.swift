@@ -41,50 +41,67 @@ struct SearchResultsGrid: View {
                             .environmentObject(moduleManager)
                             .environmentObject(libraryManager)
                     ) {
-                        ZStack {
+                        ZStack(alignment: .bottom) {
                             LazyImage(url: URL(string: item.imageUrl)) { state in
                                 if let uiImage = state.imageContainer?.image {
                                     Image(uiImage: uiImage)
                                         .resizable()
                                         .aspectRatio(contentMode: .fill)
                                         .frame(width: cellWidth, height: cellWidth * 1.5)
-                                        .cornerRadius(12)
                                         .clipped()
                                 } else {
                                     Rectangle()
                                         .fill(.tertiary)
                                         .frame(width: cellWidth, height: cellWidth * 1.5)
-                                        .cornerRadius(12)
-                                        .clipped()
+                                        .overlay(
+                                            Image(systemName: "photo.fill")
+                                                .font(.system(size: 24))
+                                                .foregroundStyle(.quaternary)
+                                        )
                                 }
                             }
                             
-                            VStack {
+                            // Title overlay with gradient
+                            VStack(alignment: .leading, spacing: 0) {
                                 Spacer()
-                                HStack {
-                                    Text(item.title)
-                                        .lineLimit(2)
-                                        .foregroundColor(.white)
-                                        .multilineTextAlignment(.leading)
-                                    Spacer()
-                                }
-                                .padding(12)
-                                .background(
-                                    LinearGradient(
-                                        colors: [
-                                            .black.opacity(0.7),
-                                            .black.opacity(0.0)
-                                        ],
-                                        startPoint: .bottom,
-                                        endPoint: .top
+                                Text(item.title)
+                                    .font(.system(size: 13, weight: .semibold))
+                                    .lineLimit(2)
+                                    .foregroundColor(.white)
+                                    .multilineTextAlignment(.leading)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.horizontal, 10)
+                                    .padding(.bottom, 10)
+                                    .padding(.top, 30)
+                                    .background(
+                                        LinearGradient(
+                                            stops: [
+                                                .init(color: .clear, location: 0),
+                                                .init(color: .black.opacity(0.75), location: 0.5),
+                                                .init(color: .black.opacity(0.85), location: 1)
+                                            ],
+                                            startPoint: .top,
+                                            endPoint: .bottom
+                                        )
                                     )
-                                        .shadow(color: .black, radius: 4, x: 0, y: 2)
-                                )
                             }
                             .frame(width: cellWidth)
                         }
                         .clipShape(RoundedRectangle(cornerRadius: 12))
-                        .padding(4)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 12)
+                                .strokeBorder(
+                                    LinearGradient(
+                                        gradient: Gradient(stops: [
+                                            .init(color: Color.white.opacity(0.15), location: 0),
+                                            .init(color: Color.white.opacity(0), location: 0.5)
+                                        ]),
+                                        startPoint: .top,
+                                        endPoint: .bottom
+                                    ),
+                                    lineWidth: 0.5
+                                )
+                        )
                     }
                     .isDetailLink(true)
                     .id(item.href)
@@ -120,8 +137,8 @@ struct SearchResultsGrid: View {
                     Text(toastMessage)
                         .font(.headline)
                         .padding()
-                        .background(Color.black.opacity(0.8))
-                        .foregroundColor(.white)
+                        .background(.ultraThinMaterial)
+                        .foregroundColor(.primary)
                         .cornerRadius(12)
                         .padding(.bottom, 40)
                         .transition(.move(edge: .bottom).combined(with: .opacity))

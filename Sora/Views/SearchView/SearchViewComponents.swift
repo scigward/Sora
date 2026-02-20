@@ -164,9 +164,6 @@ struct SearchContent: View {
                 if !searchHistory.isEmpty {
                     SearchHistorySection(title: "Recent Searches") {
                         VStack(spacing: 0) {
-                            Divider()
-                                .padding(.horizontal, 16)
-                            
                             ForEach(searchHistory.indices, id: \.self) { index in
                                 SearchHistoryRow(
                                     text: searchHistory[index],
@@ -179,16 +176,18 @@ struct SearchContent: View {
                                     showDivider: index < searchHistory.count - 1
                                 )
                             }
+                            
                             Divider()
                                 .padding(.horizontal, 16)
-                            Spacer()
-                            HStack {
-                                Button(action: onClearHistory) {
-                                    Text("Clear")
-                                        .foregroundColor(.accentColor)
-                                }
-                                .frame(maxWidth: .infinity, alignment: .center)
+                            
+                            Button(action: onClearHistory) {
+                                Text("Clear All")
+                                    .font(.subheadline)
+                                    .fontWeight(.medium)
+                                    .foregroundColor(.red)
                             }
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(.vertical, 11)
                         }
                     }
                     .padding(.vertical)

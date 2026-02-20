@@ -313,7 +313,7 @@ struct CustomDownloadHeader: View {
                 
                 Spacer()
                 
-                HStack(spacing: 16) {
+                HStack(spacing: 12) {
                     Button(action: {
                         withAnimation(.easeInOut(duration: 0.3)) {
                             isSearchActive.toggle()
@@ -322,17 +322,12 @@ struct CustomDownloadHeader: View {
                             searchText = ""
                         }
                     }) {
-                        Image(systemName: isSearchActive ? "xmark.circle.fill" : "magnifyingglass")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 18, height: 18)
-                            .foregroundColor(.accentColor)
-                            .padding(10)
-                            .background(
-                                Circle()
-                                    .fill(Color.gray.opacity(0.2))
-                                    .shadow(color: .accentColor.opacity(0.2), radius: 2)
-                            )
+                        Image(systemName: isSearchActive ? "xmark" : "magnifyingglass")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(.primary)
+                            .frame(width: 36, height: 36)
+                            .background(.ultraThinMaterial)
+                            .clipShape(Circle())
                             .circularGradientOutline()
                     }
 
@@ -352,16 +347,11 @@ struct CustomDownloadHeader: View {
                             }
                         } label: {
                             Image(systemName: "arrow.up.arrow.down")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 18, height: 18)
-                                .foregroundColor(.accentColor)
-                                .padding(10)
-                                .background(
-                                    Circle()
-                                        .fill(Color.gray.opacity(0.2))
-                                        .shadow(color: .accentColor.opacity(0.2), radius: 2)
-                                )
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(.primary)
+                                .frame(width: 36, height: 36)
+                                .background(.ultraThinMaterial)
+                                .clipShape(Circle())
                                 .circularGradientOutline()
                         }
                     }
@@ -424,7 +414,7 @@ struct CustomDownloadHeader: View {
             }
             
             VStack(spacing: 0) {
-                HStack(spacing: 0) {
+                HStack(spacing: 4) {
                     TabButton(
                         title: NSLocalizedString("Active", comment: ""),
                         icon: "arrow.down.circle",
@@ -439,8 +429,13 @@ struct CustomDownloadHeader: View {
                         action: { selectedTab = 1 }
                     )
                 }
+                .padding(4)
+                .background(
+                    Capsule()
+                        .fill(Color.gray.opacity(0.12))
+                )
                 .padding(.horizontal, 20)
-                .padding(.vertical, 16)
+                .padding(.vertical, 12)
             }
         }
     }
@@ -454,44 +449,25 @@ struct TabButton: View {
 
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 8) {
-                Image(systemName: icon)
-                    .font(.body)
-                    .foregroundColor(isSelected ? .accentColor : .secondary)
+            HStack(spacing: 6) {
+                Image(systemName: isSelected ? icon + ".fill" : icon)
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(isSelected ? .white : .secondary)
                 Text(title)
-                    .font(.body)
-                    .fontWeight(isSelected ? .semibold : .regular)
-                    .foregroundColor(isSelected ? .accentColor : .secondary)
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(isSelected ? .white : .secondary)
             }
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 12)
-            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+            .padding(.horizontal, 14)
             .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(isSelected ? Color.accentColor.opacity(0.1) : Color.clear)
+                Capsule()
+                    .fill(isSelected ? Color.accentColor : Color.clear)
             )
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(
-                        isSelected
-                            ? AnyShapeStyle(
-                                LinearGradient(
-                                    gradient: Gradient(stops: [
-                                        .init(color: Color.accentColor.opacity(0.25), location: 0),
-                                        .init(color: Color.accentColor.opacity(0), location: 1)
-                                    ]),
-                                    startPoint: .top,
-                                    endPoint: .bottom
-                                )
-                            )
-                            : AnyShapeStyle(Color.clear),
-                        lineWidth: 1.5
-                    )
-            )
-            .contentShape(Rectangle())
+            .contentShape(Capsule())
         }
         .buttonStyle(PlainButtonStyle())
-        .animation(.easeInOut(duration: 0.2), value: isSelected)
+        .animation(.spring(response: 0.35, dampingFraction: 0.8), value: isSelected)
     }
 }
 
@@ -632,20 +608,19 @@ struct SummaryItem: View {
     let icon: String
     
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 6) {
             Image(systemName: icon)
-                .font(.title2)
-                .foregroundColor(.accentColor)
+                .font(.system(size: 20))
+                .foregroundStyle(.accentColor)
 
             if !value.isEmpty {
                 Text(value)
-                    .font(.title3)
-                    .fontWeight(.semibold)
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
                     .foregroundStyle(.primary)
             }
 
             Text(title)
-                .font(.caption)
+                .font(.system(size: 11, weight: .medium))
                 .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity)

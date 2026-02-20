@@ -13,19 +13,26 @@ fileprivate struct SettingsNavigationRow: View {
     let titleKey: String
     let isExternal: Bool
     let textColor: Color
+    let iconColor: Color
     
-    init(icon: String, titleKey: String, isExternal: Bool = false, textColor: Color = .primary) {
+    init(icon: String, titleKey: String, isExternal: Bool = false, textColor: Color = .primary, iconColor: Color = .accentColor) {
         self.icon = icon
         self.titleKey = titleKey
         self.isExternal = isExternal
         self.textColor = textColor
+        self.iconColor = iconColor
     }
     
     var body: some View {
-        HStack {
+        HStack(spacing: 12) {
             Image(systemName: icon)
-                .frame(width: 24, height: 24)
-                .foregroundStyle(textColor)
+                .font(.system(size: 14, weight: .semibold))
+                .foregroundStyle(.white)
+                .frame(width: 30, height: 30)
+                .background(
+                    RoundedRectangle(cornerRadius: 7, style: .continuous)
+                        .fill(iconColor)
+                )
             
             Text(NSLocalizedString(titleKey, comment: ""))
                 .foregroundStyle(textColor)
@@ -33,15 +40,17 @@ fileprivate struct SettingsNavigationRow: View {
             Spacer()
             
             if isExternal {
-                Image(systemName: "safari")
-                    .foregroundStyle(.gray)
+                Image(systemName: "arrow.up.right")
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(.tertiary)
             } else {
                 Image(systemName: "chevron.right")
-                    .foregroundStyle(.gray)
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundStyle(.tertiary)
             }
         }
         .padding(.horizontal, 16)
-        .padding(.vertical, 12)
+        .padding(.vertical, 11)
     }
 }
 
@@ -62,54 +71,60 @@ fileprivate struct ModulePreviewRow: View {
                         Image(uiImage: uiImage)
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 60, height: 60)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .frame(width: 52, height: 52)
+                            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
                     } else {
-                        Image(systemName: "cube")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 60, height: 60)
-                            .foregroundStyle(Color.accentColor)
-                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(Color.accentColor.opacity(0.15))
+                            .frame(width: 52, height: 52)
+                            .overlay(
+                                Image(systemName: "cube.fill")
+                                    .font(.system(size: 22))
+                                    .foregroundStyle(Color.accentColor)
+                            )
                     }
                 }
                 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: 3) {
                     Text(module.metadata.sourceName)
                         .font(.headline)
                         .foregroundStyle(.primary)
                     
                     Text("Tap to manage your modules")
                         .font(.subheadline)
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.secondary)
                         .lineLimit(1)
-                        .fixedSize(horizontal: false, vertical: true)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             } else {
-                Image(systemName: "cube")
-                    .font(.system(size: 36))
-                    .foregroundStyle(Color.accentColor)
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color.accentColor.opacity(0.15))
+                    .frame(width: 52, height: 52)
+                    .overlay(
+                        Image(systemName: "cube.fill")
+                            .font(.system(size: 22))
+                            .foregroundStyle(Color.accentColor)
+                    )
                 
-                VStack(alignment: .leading, spacing: 4) {
+                VStack(alignment: .leading, spacing: 3) {
                     Text("No Module Selected")
                         .font(.headline)
                         .foregroundStyle(.primary)
                     
                     Text("Tap to select a module")
                         .font(.subheadline)
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.secondary)
                         .lineLimit(1)
-                        .fixedSize(horizontal: false, vertical: true)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             
             Image(systemName: "chevron.right")
-                .foregroundStyle(.gray)
+                .font(.system(size: 12, weight: .semibold))
+                .foregroundStyle(.tertiary)
         }
         .padding(.horizontal, 16)
-        .padding(.vertical, 16)
+        .padding(.vertical, 14)
         .background(.ultraThinMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 12))
         .overlay(
@@ -169,27 +184,27 @@ struct SettingsView: View {
                         
                         VStack(spacing: 0) {
                             NavigationLink(destination: SettingsViewGeneral().navigationBarBackButtonHidden(false)) {
-                                SettingsNavigationRow(icon: "gearshape", titleKey: "General Preferences")
+                                SettingsNavigationRow(icon: "gearshape.fill", titleKey: "General Preferences", iconColor: .gray)
                             }
                             Divider().padding(.horizontal, 16)
                             
                             NavigationLink(destination: SettingsViewLibrary().navigationBarBackButtonHidden(false)) {
-                                SettingsNavigationRow(icon: "books.vertical", titleKey: "Library")
+                                SettingsNavigationRow(icon: "books.vertical.fill", titleKey: "Library", iconColor: .orange)
                             }
                             Divider().padding(.horizontal, 16)
                             
                             NavigationLink(destination: SettingsViewPlayer().navigationBarBackButtonHidden(false)) {
-                                SettingsNavigationRow(icon: "play.circle", titleKey: "Video Player")
+                                SettingsNavigationRow(icon: "play.circle.fill", titleKey: "Video Player", iconColor: .blue)
                             }
                             Divider().padding(.horizontal, 16)
                             
                             NavigationLink(destination: SettingsViewDownloads().navigationBarBackButtonHidden(false)) {
-                                SettingsNavigationRow(icon: "arrow.down.circle", titleKey: "Downloads")
+                                SettingsNavigationRow(icon: "arrow.down.circle.fill", titleKey: "Downloads", iconColor: .green)
                             }
                             Divider().padding(.horizontal, 16)
                             
                             NavigationLink(destination: SettingsViewTrackers().navigationBarBackButtonHidden(false)) {
-                                SettingsNavigationRow(icon: "square.3.stack.3d", titleKey: "Trackers")
+                                SettingsNavigationRow(icon: "square.3.stack.3d.top.filled", titleKey: "Trackers", iconColor: .purple)
                             }
                         }
                         .background(.ultraThinMaterial)
@@ -220,17 +235,17 @@ struct SettingsView: View {
                         
                         VStack(spacing: 0) {
                             NavigationLink(destination: SettingsViewData().navigationBarBackButtonHidden(false)) {
-                                SettingsNavigationRow(icon: "folder", titleKey: "Data")
+                                SettingsNavigationRow(icon: "folder.fill", titleKey: "Data", iconColor: .cyan)
                             }
                             Divider().padding(.horizontal, 16)
                             
                             NavigationLink(destination: SettingsViewLogger().navigationBarBackButtonHidden(false)) {
-                                SettingsNavigationRow(icon: "doc.text", titleKey: "Logs")
+                                SettingsNavigationRow(icon: "doc.text.fill", titleKey: "Logs", iconColor: .indigo)
                             }
                             Divider().padding(.horizontal, 16)
                             
                             NavigationLink(destination: SettingsViewBackup().navigationBarBackButtonHidden(false)) {
-                                SettingsNavigationRow(icon: "arrow.triangle.2.circlepath", titleKey: NSLocalizedString("Backup & Restore", comment: "Settings navigation row for backup and restore"))
+                                SettingsNavigationRow(icon: "arrow.triangle.2.circlepath", titleKey: NSLocalizedString("Backup & Restore", comment: "Settings navigation row for backup and restore"), iconColor: .mint)
                             }
                         }
                         .background(.ultraThinMaterial)
@@ -261,60 +276,68 @@ struct SettingsView: View {
                         
                         VStack(spacing: 0) {
                             NavigationLink(destination: SettingsViewAbout().navigationBarBackButtonHidden(false)) {
-                                SettingsNavigationRow(icon: "info.circle", titleKey: "About Sora")
+                                SettingsNavigationRow(icon: "info.circle.fill", titleKey: "About Sora", iconColor: .blue)
                             }
                             Divider().padding(.horizontal, 16)
                             
                             Link(destination: URL(string: "https://github.com/cranci1/Sora")!) {
-                                HStack {
+                                HStack(spacing: 12) {
                                     Image("Github Icon")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: 20, height: 20)
-                                        .padding(.leading, 2)
-                                        .padding(.trailing, 4)
+                                        .frame(width: 16, height: 16)
+                                        .padding(7)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 7, style: .continuous)
+                                                .fill(Color(.systemGray))
+                                        )
                                     
                                     Text(NSLocalizedString("Sora GitHub Repository", comment: ""))
-                                        .foregroundStyle(.gray)
+                                        .foregroundStyle(.primary)
                                     
                                     Spacer()
                                     
-                                    Image(systemName: "safari")
-                                        .foregroundStyle(.gray)
+                                    Image(systemName: "arrow.up.right")
+                                        .font(.system(size: 12, weight: .semibold))
+                                        .foregroundStyle(.tertiary)
                                 }
                                 .padding(.horizontal, 16)
-                                .padding(.vertical, 12)
+                                .padding(.vertical, 11)
                             }
                             Divider().padding(.horizontal, 16)
                             
                             Link(destination: URL(string: "https://discord.gg/x7hppDWFDZ")!) {
-                                HStack {
+                                HStack(spacing: 12) {
                                     Image("Discord Icon")
                                         .resizable()
                                         .aspectRatio(contentMode: .fit)
-                                        .frame(width: 20, height: 20)
-                                        .padding(.leading, 2)
-                                        .padding(.trailing, 4)
+                                        .frame(width: 16, height: 16)
+                                        .padding(7)
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 7, style: .continuous)
+                                                .fill(Color(red: 0.34, green: 0.40, blue: 0.95))
+                                        )
                                     
                                     Text(NSLocalizedString("Join the Discord", comment: ""))
-                                        .foregroundStyle(.gray)
+                                        .foregroundStyle(.primary)
                                     
                                     Spacer()
                                     
-                                    Image(systemName: "safari")
-                                        .foregroundStyle(.gray)
+                                    Image(systemName: "arrow.up.right")
+                                        .font(.system(size: 12, weight: .semibold))
+                                        .foregroundStyle(.tertiary)
                                 }
                                 .padding(.horizontal, 16)
-                                .padding(.vertical, 12)
+                                .padding(.vertical, 11)
                             }
                             Divider().padding(.horizontal, 16)
                             
                             Link(destination: URL(string: "https://github.com/cranci1/Sora/issues")!) {
                                 SettingsNavigationRow(
-                                    icon: "exclamationmark.circle.fill",
+                                    icon: "exclamationmark.triangle.fill",
                                     titleKey: "Report an Issue",
                                     isExternal: true,
-                                    textColor: .gray
+                                    iconColor: .yellow
                                 )
                             }
                             Divider().padding(.horizontal, 16)
@@ -324,7 +347,7 @@ struct SettingsView: View {
                                     icon: "doc.text.fill",
                                     titleKey: "License (GPLv3.0)",
                                     isExternal: true,
-                                    textColor: .gray
+                                    iconColor: .brown
                                 )
                             }
                         }
@@ -349,7 +372,7 @@ struct SettingsView: View {
                     
                     Text("Sora 1.0.1 by cranci1")
                         .font(.footnote)
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.tertiary)
                         .frame(maxWidth: .infinity, alignment: .center)
                         .padding(.top, 8)
                 }
