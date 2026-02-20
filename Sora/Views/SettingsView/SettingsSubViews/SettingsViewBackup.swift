@@ -46,10 +46,11 @@ fileprivate struct SettingsSection<Content: View>: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 6) {
             Text(title.uppercased())
                 .font(.footnote)
-                .foregroundStyle(.gray)
+                .fontWeight(.medium)
+                .foregroundStyle(.secondary)
                 .padding(.horizontal, 20)
             
             VStack(spacing: 0) {
@@ -76,7 +77,7 @@ fileprivate struct SettingsSection<Content: View>: View {
             if let footer = footer {
                 Text(footer)
                     .font(.footnote)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(.secondary)
                     .padding(.horizontal, 20)
                     .padding(.top, 4)
             }
@@ -148,7 +149,7 @@ fileprivate struct BackupCoverageView: View {
         VStack(spacing: 0) {
             HStack(spacing: 8) {
                 Image(systemName: "checkmark.circle")
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.secondary)
                 Text(NSLocalizedString("Included", comment: "Title for items included in backup"))
                     .font(.footnote)
                     .foregroundColor(.secondary)
@@ -166,7 +167,7 @@ fileprivate struct BackupCoverageView: View {
             BackupCoverageItem(icon: "gearshape", title: NSLocalizedString("User Settings", comment: "User settings backup item"), isIncluded: true, showDivider: false)
             HStack(spacing: 8) {
                 Image(systemName: "xmark.circle")
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.secondary)
                 Text(NSLocalizedString("Not Included", comment: "Title for items not included in backup"))
                     .font(.footnote)
                     .foregroundColor(.secondary)
@@ -247,7 +248,7 @@ struct SettingsViewBackup: View {
                 }
                 Text(NSLocalizedString("Notice: This feature is still experimental. Please double-check your data after import/export. \nAlso note that when importing a backup your current data will be overwritten, it is not possible to merge yet.", comment: "Footer notice for experimental backup/restore feature"))
                     .font(.footnote)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 20)
                     .padding(.top, 8)
@@ -482,7 +483,7 @@ struct BackupListView: View {
                     }
                     if backups.isEmpty {
                         Text("No backups found in the Backups folder.")
-                            .foregroundColor(.gray)
+                            .foregroundStyle(.secondary)
                             .padding(.horizontal, 16)
                             .padding(.vertical, 20)
                     }
@@ -620,8 +621,22 @@ struct ImportNoticeView: View {
                 .font(.body)
                 .padding(.horizontal, 8)
                 .padding(.vertical, 8)
-                .background(Color(.systemGray6))
-                .cornerRadius(12)
+                .background(.ultraThinMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .strokeBorder(
+                            LinearGradient(
+                                gradient: Gradient(stops: [
+                                    .init(color: Color.accentColor.opacity(0.25), location: 0),
+                                    .init(color: Color.accentColor.opacity(0), location: 1)
+                                ]),
+                                startPoint: .top,
+                                endPoint: .bottom
+                            ),
+                            lineWidth: 0.5
+                        )
+                )
             }
             .padding(.horizontal, 24)
             .padding(.vertical, 16)
