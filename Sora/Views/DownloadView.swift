@@ -444,13 +444,22 @@ struct CustomDownloadHeader: View {
 struct TabButton: View {
     let title: String
     let icon: String
+    let selectedIcon: String
     let isSelected: Bool
     let action: () -> Void
+    
+    init(title: String, icon: String, isSelected: Bool, action: @escaping () -> Void) {
+        self.title = title
+        self.icon = icon
+        self.selectedIcon = icon + ".fill"
+        self.isSelected = isSelected
+        self.action = action
+    }
 
     var body: some View {
         Button(action: action) {
             HStack(spacing: 6) {
-                Image(systemName: isSelected ? icon + ".fill" : icon)
+                Image(systemName: isSelected ? selectedIcon : icon)
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundStyle(isSelected ? .white : .secondary)
                 Text(title)
