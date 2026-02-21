@@ -79,8 +79,8 @@ struct BookmarksDetailView: View {
                             .padding(10)
                             .background(
                                 Circle()
-                                    .fill(Color.gray.opacity(0.2))
-                                    .shadow(color: .accentColor.opacity(0.2), radius: 2)
+                                    .fill(.ultraThinMaterial)
+                                    
                             )
                             .circularGradientOutline()
                     }
@@ -107,8 +107,8 @@ struct BookmarksDetailView: View {
                             .padding(10)
                             .background(
                                 Circle()
-                                    .fill(Color.gray.opacity(0.2))
-                                    .shadow(color: .accentColor.opacity(0.2), radius: 2)
+                                    .fill(.ultraThinMaterial)
+                                    
                             )
                             .circularGradientOutline()
                     }
@@ -133,8 +133,8 @@ struct BookmarksDetailView: View {
                             .padding(10)
                             .background(
                                 Circle()
-                                    .fill(Color.gray.opacity(0.2))
-                                    .shadow(color: .accentColor.opacity(0.2), radius: 2)
+                                    .fill(.ultraThinMaterial)
+                                    
                             )
                             .circularGradientOutline()
                     }
@@ -149,8 +149,8 @@ struct BookmarksDetailView: View {
                             .padding(10)
                             .background(
                                 Circle()
-                                    .fill(Color.gray.opacity(0.2))
-                                    .shadow(color: .accentColor.opacity(0.2), radius: 2)
+                                    .fill(.ultraThinMaterial)
+                                    
                             )
                             .circularGradientOutline()
                     }

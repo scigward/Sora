@@ -136,7 +136,7 @@ fileprivate struct SettingsPickerRow<T: Hashable>: View {
                     }
                 } label: {
                     Text(optionToString(selection))
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.secondary)
                 }
             }
             .padding(.horizontal, 16)

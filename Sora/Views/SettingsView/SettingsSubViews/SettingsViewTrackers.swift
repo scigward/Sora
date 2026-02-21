@@ -150,7 +150,7 @@ struct SettingsViewTrackers: View {
                                     HStack(spacing: 0) {
                                         Text(NSLocalizedString("Logged in as ", comment: ""))
                                             .font(.footnote)
-                                            .foregroundStyle(.gray)
+                                            .foregroundStyle(.secondary)
                                         Text(anilistUsername)
                                             .font(.footnote)
                                             .fontWeight(.medium)
@@ -160,7 +160,7 @@ struct SettingsViewTrackers: View {
                                 } else {
                                     Text(NSLocalizedString("You are not logged in", comment: ""))
                                         .font(.footnote)
-                                        .foregroundStyle(.gray)
+                                        .foregroundStyle(.secondary)
                                         .frame(height: 18)
                                 }
                             }
@@ -243,7 +243,7 @@ struct SettingsViewTrackers: View {
                                     HStack(spacing: 0) {
                                         Text(NSLocalizedString("Logged in as ", comment: ""))
                                             .font(.footnote)
-                                            .foregroundStyle(.gray)
+                                            .foregroundStyle(.secondary)
                                         Text(traktUsername)
                                             .font(.footnote)
                                             .fontWeight(.medium)
@@ -253,7 +253,7 @@ struct SettingsViewTrackers: View {
                                 } else {
                                     Text(NSLocalizedString("You are not logged in", comment: ""))
                                         .font(.footnote)
-                                        .foregroundStyle(.gray)
+                                        .foregroundStyle(.secondary)
                                         .frame(height: 18)
                                 }
                             }

@@ -84,7 +84,7 @@ struct TabBar: View {
                 }) {
                     Image(systemName: "xmark")
                         .font(.system(size: 20))
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.secondary)
                         .frame(width: 20, height: 20)
                         .matchedGeometryEffect(id: "xmark", in: animation)
                         .padding(16)
@@ -115,8 +115,7 @@ struct TabBar: View {
                     HStack {
                         Image(systemName: "magnifyingglass")
                             .font(.footnote)
-                            .foregroundStyle(.gray)
-                            .opacity(0.7)
+                            .foregroundStyle(.secondary)
                         
                         TextField("Search for something...", text: $searchQuery)
                             .textFieldStyle(.plain)
@@ -146,8 +145,7 @@ struct TabBar: View {
                             }) {
                                 Image(systemName: "xmark.circle.fill")
                                     .font(.system(size: 16))
-                                    .foregroundStyle(.gray)
-                                    .opacity(0.7)
+                                    .foregroundStyle(.secondary)
                             }
                             .buttonStyle(PlainButtonStyle())
                         }
@@ -324,7 +322,7 @@ struct TabBar: View {
         let icon = Image(systemName: tab.icon + (isActive ? ".fill" : ""))
             .frame(width: 28, height: 28)
             .matchedGeometryEffect(id: tab.icon, in: animation)
-            .foregroundStyle(isActive ? .black : .gray)
+            .foregroundStyle(isActive ? Color.black : Color.secondary)
             .padding(.vertical, 8)
             .padding(.horizontal, 10)
             .frame(width: tabWidth)

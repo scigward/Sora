@@ -135,7 +135,7 @@ fileprivate struct SettingsPickerRow<T: Hashable>: View {
                     }
                 } label: {
                     Text(optionToString(selection))
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.secondary)
                 }
             }
             .padding(.horizontal, 16)
@@ -299,7 +299,7 @@ struct SettingsViewGeneral: View {
                                 HStack {
                                     Text("\(index + 1)")
                                         .frame(width: 24, height: 24)
-                                        .foregroundStyle(.gray)
+                                        .foregroundStyle(.secondary)
                                     
                                     Text(provider)
                                         .foregroundStyle(.primary)
@@ -325,7 +325,7 @@ struct SettingsViewGeneral: View {
                         
                         Text(NSLocalizedString("Drag to reorder", comment: ""))
                             .font(.caption)
-                            .foregroundStyle(.gray)
+                            .foregroundStyle(.secondary)
                             .frame(maxWidth: .infinity, alignment: .center)
                             .padding(.top, -6)
                             .padding(.bottom, 8)

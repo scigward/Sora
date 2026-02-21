@@ -197,7 +197,7 @@ struct SettingsViewLibrary: View {
                                 HStack {
                                     Text("\(index + 1)")
                                         .frame(width: 24, height: 24)
-                                        .foregroundStyle(.gray)
+                                        .foregroundStyle(.secondary)
                                     
                                     Image(systemName: sectionIcon(for: section))
                                         .frame(width: 24, height: 24)

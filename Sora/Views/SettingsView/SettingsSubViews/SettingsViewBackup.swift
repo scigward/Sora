@@ -409,7 +409,7 @@ fileprivate struct SettingsNavigationRow: View {
                 Spacer()
                 if showChevron {
                     Image(systemName: "chevron.right")
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.secondary)
                 }
             }
             .padding(.horizontal, 16)

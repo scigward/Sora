@@ -47,7 +47,7 @@ struct TMDBMatchPopupView: View {
                     } else if results.isEmpty {
                         Text("No matches found")
                             .font(.subheadline)
-                            .foregroundStyle(.gray)
+                            .foregroundStyle(.secondary)
                             .frame(maxWidth: .infinity)
                             .padding()
                     } else {

@@ -129,21 +129,21 @@ fileprivate struct ModuleListItemView: View {
                             .foregroundStyle(.primary)
                         Text("v\(module.metadata.version)")
                             .font(.caption)
-                            .foregroundStyle(.gray)
+                            .foregroundStyle(.secondary)
                     }
                     
                     HStack(spacing: 8) {
                         Text(module.metadata.author.name)
                             .font(.caption)
-                            .foregroundStyle(.gray)
+                            .foregroundStyle(.secondary)
                         
                         Text("•")
                             .font(.caption)
-                            .foregroundStyle(.gray)
+                            .foregroundStyle(.secondary)
                         
                         Text(module.metadata.language)
                             .font(.caption)
-                            .foregroundStyle(.gray)
+                            .foregroundStyle(.secondary)
                     }
                 }
                 
