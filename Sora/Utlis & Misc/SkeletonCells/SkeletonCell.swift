@@ -12,7 +12,7 @@ struct HomeSkeletonCell: View {
     
     var body: some View {
         RoundedRectangle(cornerRadius: 12)
-            .fill(Color.gray.opacity(0.2))
+            .fill(.ultraThinMaterial)
             .frame(width: cellWidth, height: cellWidth * 1.5)
             .shimmering()
     }
@@ -23,7 +23,7 @@ struct SearchSkeletonCell: View {
     
     var body: some View {
         RoundedRectangle(cornerRadius: 12)
-            .fill(Color.gray.opacity(0.2))
+            .fill(.ultraThinMaterial)
             .frame(width: cellWidth, height: cellWidth * 1.5)
             .shimmering()
     }

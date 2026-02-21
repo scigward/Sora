@@ -28,7 +28,7 @@ struct BookmarkGridItemView: View {
                         .clipped()
                 } else {
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.gray.opacity(0.3))
+                        .fill(.ultraThinMaterial)
                         .aspectRatio(2/3, contentMode: .fit)
                         .redacted(reason: .placeholder)
                 }
@@ -48,14 +48,14 @@ struct BookmarkGridItemView: View {
                                         .clipShape(Circle())
                                 } else {
                                     Circle()
-                                        .fill(Color.gray.opacity(0.3))
+                                        .fill(.ultraThinMaterial)
                                         .frame(width: 32, height: 32)
                                 }
                             }
                         )
                     ZStack {
                         Circle()
-                            .fill(Color.gray.opacity(0.8))
+                            .fill(.thinMaterial)
                             .shadow(color: .accentColor.opacity(0.2), radius: 2)
                             .frame(width: 20, height: 20)
                         Image(systemName: isNovel ? "book.fill" : "tv.fill")

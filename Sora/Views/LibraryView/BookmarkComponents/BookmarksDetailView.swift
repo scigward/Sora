@@ -352,7 +352,7 @@ private struct SortMenu: View {
                 .frame(width: 24, height: 24)
                 .foregroundColor(.accentColor)
                 .padding(6)
-                .background(Color.gray.opacity(0.2))
+                .background(.ultraThinMaterial)
                 .clipShape(Circle())
                 .circularGradientOutline()
         }

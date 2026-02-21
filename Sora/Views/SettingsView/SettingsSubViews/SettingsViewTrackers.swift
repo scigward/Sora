@@ -131,7 +131,7 @@ struct SettingsViewTrackers: View {
                                         .padding(.trailing, 10)
                                 } else {
                                     RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color.gray.opacity(0.3))
+                                        .fill(.ultraThinMaterial)
                                         .frame(width: 60, height: 60)
                                         .shimmering()
                                 }
@@ -224,7 +224,7 @@ struct SettingsViewTrackers: View {
                                         .padding(.trailing, 10)
                                 } else {
                                     RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color.gray.opacity(0.3))
+                                        .fill(.ultraThinMaterial)
                                         .frame(width: 60, height: 60)
                                         .shimmering()
                                 }

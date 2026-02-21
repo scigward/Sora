@@ -1097,17 +1097,7 @@ struct EnhancedShowEpisodesView: View {
     
     private var placeholderGradient: some View {
         Rectangle()
-            .fill(
-                LinearGradient(
-                    gradient: Gradient(colors: [
-                        Color.gray.opacity(0.2),
-                        Color.gray.opacity(0.3),
-                        Color.gray.opacity(0.2)
-                    ]),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-            )
+            .fill(.ultraThinMaterial)
             .frame(width: UIScreen.main.bounds.width, height: 700)
             .clipped()
     }
@@ -1471,13 +1461,13 @@ struct SearchableStyleModifier: ViewModifier {
             .searchable(text: .constant(""), prompt: "")
             .background(
                 RoundedRectangle(cornerRadius: 15)
-                    .fill(Color.gray.opacity(0.2))
+                    .fill(.ultraThinMaterial)
                     .overlay(
                         RoundedRectangle(cornerRadius: 15)
-                            .stroke(
+                            .strokeBorder(
                                 LinearGradient(
                                     gradient: Gradient(stops: [
-                                        .init(color: Color.accentColor.opacity(0.25), location: 0),
+                                        .init(color: Color.accentColor.opacity(0.2), location: 0),
                                         .init(color: Color.accentColor.opacity(0), location: 1)
                                     ]),
                                     startPoint: .top,
