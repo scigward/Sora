@@ -437,7 +437,17 @@ struct FullWidthContinueReadingCell: View {
             .cornerRadius(10)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
-                    .strokeBorder(LinearGradient(gradient: Gradient(stops: [.init(color: Color.accentColor.opacity(0.2), location: 0), .init(color: Color.accentColor.opacity(0), location: 1)]), startPoint: .top, endPoint: .bottom), lineWidth: 0.5)
+                    .strokeBorder(
+                        LinearGradient(
+                            gradient: Gradient(stops: [
+                                .init(color: Color.accentColor.opacity(0.2), location: 0),
+                                .init(color: Color.accentColor.opacity(0), location: 1)
+                            ]),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        ),
+                        lineWidth: 0.5
+                    )
             )
         }
         .frame(height: 157.03)
