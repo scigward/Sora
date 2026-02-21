@@ -26,14 +26,19 @@ struct BookmarkCell: View {
                             .clipped()
                     } else {
                         RoundedRectangle(cornerRadius: 12)
-                            .fill(Color.gray.opacity(0.3))
+                            .fill(.ultraThinMaterial)
                             .frame(width: 162, height: 243)
+                            .overlay(
+                                Image(systemName: "photo")
+                                    .font(.system(size: 28))
+                                    .foregroundStyle(.tertiary)
+                            )
                     }
                 }
                 .overlay(
                     ZStack {
                         Circle()
-                            .fill(Color.black.opacity(0.5))
+                            .fill(.ultraThinMaterial)
                             .frame(width: 28, height: 28)
                             .overlay(
                                 LazyImage(url: URL(string: module.metadata.iconUrl)) { state in
@@ -45,7 +50,7 @@ struct BookmarkCell: View {
                                             .clipShape(Circle())
                                     } else {
                                         Circle()
-                                            .fill(Color.gray.opacity(0.3))
+                                            .fill(.ultraThinMaterial)
                                             .frame(width: 32, height: 32)
                                     }
                                 }
@@ -64,14 +69,14 @@ struct BookmarkCell: View {
                         .padding(12)
                         .background(
                             LinearGradient(
-                                colors: [
-                                    .black.opacity(0.7),
-                                    .black.opacity(0.0)
-                                ],
+                                gradient: Gradient(stops: [
+                                    .init(color: Color.black.opacity(0.8), location: 0),
+                                    .init(color: Color.black.opacity(0.4), location: 0.6),
+                                    .init(color: Color.clear, location: 1.0)
+                                ]),
                                 startPoint: .bottom,
                                 endPoint: .top
                             )
-                            .shadow(color: .black, radius: 4, x: 0, y: 2)
                         )
                 }
                 .frame(width: 162)

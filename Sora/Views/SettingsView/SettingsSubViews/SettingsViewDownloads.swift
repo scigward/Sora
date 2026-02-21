@@ -20,10 +20,11 @@ fileprivate struct SettingsSection<Content: View>: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 6) {
             Text(title.uppercased())
                 .font(.footnote)
-                .foregroundStyle(.gray)
+                .fontWeight(.medium)
+                .foregroundStyle(.secondary)
                 .padding(.horizontal, 20)
             
             VStack(spacing: 0) {
@@ -50,7 +51,7 @@ fileprivate struct SettingsSection<Content: View>: View {
             if let footer = footer {
                 Text(footer)
                     .font(.footnote)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(.secondary)
                     .padding(.horizontal, 20)
                     .padding(.top, 4)
             }
@@ -135,7 +136,7 @@ fileprivate struct SettingsPickerRow<T: Hashable>: View {
                     }
                 } label: {
                     Text(optionToString(selection))
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.secondary)
                 }
             }
             .padding(.horizontal, 16)

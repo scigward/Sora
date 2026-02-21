@@ -9,30 +9,32 @@ import SwiftUI
 
 struct CircularProgressBar: View {
     var progress: Double
+    @AppStorage("remainingTimePercentage") private var remainingTimePercentage: Double = 90.0
     
     var body: some View {
+        let threshold = remainingTimePercentage / 100.0
+        let isComplete = progress >= threshold
+        
         ZStack {
             Circle()
-                .stroke(lineWidth: 5.0)
-                .opacity(0.3)
-                .foregroundColor(Color.accentColor)
+                .stroke(lineWidth: 3.0)
+                .foregroundStyle(.tertiary)
             
             Circle()
                 .trim(from: 0.0, to: CGFloat(min(progress, 1.0)))
-                .stroke(style: StrokeStyle(lineWidth: 5.0, lineCap: .round, lineJoin: .round))
-                .foregroundColor(Color.accentColor)
+                .stroke(style: StrokeStyle(lineWidth: 3.0, lineCap: .round, lineJoin: .round))
+                .foregroundStyle(isComplete ? Color.green : Color.accentColor)
                 .rotationEffect(Angle(degrees: 270.0))
-                .animation(.linear, value: progress)
-            
-            let remainingTimePercentage = UserDefaults.standard.object(forKey: "remainingTimePercentage") != nil ? UserDefaults.standard.double(forKey: "remainingTimePercentage") : 90.0
-            let threshold = remainingTimePercentage / 100.0
+                .animation(.easeInOut(duration: 0.3), value: progress)
 
-            if progress >= threshold {
+            if isComplete {
                 Image(systemName: "checkmark")
-                    .font(.system(size: 12))
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundStyle(.green)
             } else {
                 Text(String(format: "%.0f%%", min(progress, 1.0) * 100.0))
-                    .font(.system(size: 12))
+                    .font(.system(size: 9, weight: .semibold, design: .rounded))
+                    .foregroundStyle(.primary)
             }
         }
     }

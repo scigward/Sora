@@ -25,14 +25,14 @@ struct BookmarkCollectionGridCell: View {
             ZStack {
                 if recentBookmarks.isEmpty {
                     RoundedRectangle(cornerRadius: 12)
-                        .fill(Color.gray.opacity(0.3))
+                        .fill(.ultraThinMaterial)
                         .frame(width: width, height: height)
                         .overlay(
                             Image(systemName: "folder.fill")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: width/3)
-                                .foregroundColor(.gray.opacity(0.5))
+                                .foregroundStyle(.tertiary)
                         )
                 } else {
                     LazyVGrid(
@@ -53,13 +53,13 @@ struct BookmarkCollectionGridCell: View {
                                             .clipped()
                                     } else {
                                         Rectangle()
-                                            .fill(Color.gray.opacity(0.3))
+                                            .fill(.ultraThinMaterial)
                                             .frame(width: cellWidth, height: cellHeight)
                                     }
                                 }
                             } else {
                                 Rectangle()
-                                    .fill(Color.gray.opacity(0.3))
+                                    .fill(.ultraThinMaterial)
                                     .frame(width: cellWidth, height: cellHeight)
                             }
                         }

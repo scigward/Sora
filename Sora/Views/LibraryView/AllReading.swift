@@ -81,8 +81,8 @@ struct AllReadingView: View {
                             .padding(10)
                             .background(
                                 Circle()
-                                    .fill(Color.gray.opacity(0.2))
-                                    .shadow(color: .accentColor.opacity(0.2), radius: 2)
+                                    .fill(.ultraThinMaterial)
+                                    
                             )
                             .circularGradientOutline()
                     }
@@ -109,8 +109,8 @@ struct AllReadingView: View {
                             .padding(10)
                             .background(
                                 Circle()
-                                    .fill(Color.gray.opacity(0.2))
-                                    .shadow(color: .accentColor.opacity(0.2), radius: 2)
+                                    .fill(.ultraThinMaterial)
+                                    
                             )
                             .circularGradientOutline()
                     }
@@ -138,8 +138,8 @@ struct AllReadingView: View {
                             .padding(10)
                             .background(
                                 Circle()
-                                    .fill(Color.gray.opacity(0.2))
-                                    .shadow(color: .accentColor.opacity(0.2), radius: 2)
+                                    .fill(.ultraThinMaterial)
+                                    
                             )
                             .circularGradientOutline()
                     }
@@ -245,17 +245,19 @@ struct AllReadingView: View {
     private var emptyStateView: some View {
         VStack(spacing: 16) {
             Image(systemName: "book.closed")
-                .font(.system(size: 50))
-                .foregroundColor(.gray)
+                .font(.system(size: 48))
+                .foregroundStyle(.tertiary)
             
-            Text("No Reading History")
-                .font(.title2)
-                .fontWeight(.bold)
-            
-            Text("Books you're reading will appear here")
-                .font(.body)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
+            VStack(spacing: 6) {
+                Text("No Reading History")
+                    .font(.title3)
+                    .fontWeight(.semibold)
+                
+                Text("Books you're reading will appear here")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+            }
         }
         .frame(maxWidth: .infinity)
         .padding(.vertical, 60)
@@ -368,7 +370,7 @@ struct FullWidthContinueReadingCell: View {
                             .opacity(0.7)
                     } else {
                         Rectangle()
-                            .fill(Color.gray.opacity(0.3))
+                            .fill(.ultraThinMaterial)
                             .frame(width: geometry.size.width, height: 157.03)
                     }
                 }
@@ -421,7 +423,7 @@ struct FullWidthContinueReadingCell: View {
                                 .clipped()
                         } else {
                             Rectangle()
-                                .fill(Color.gray.opacity(0.3))
+                                .fill(.ultraThinMaterial)
                                 .frame(width: geometry.size.width * 0.4, height: 157.03)
                         }
                     }
@@ -435,7 +437,17 @@ struct FullWidthContinueReadingCell: View {
             .cornerRadius(10)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.gray.opacity(0.3), lineWidth: 0.5)
+                    .strokeBorder(
+                        LinearGradient(
+                            gradient: Gradient(stops: [
+                                .init(color: Color.accentColor.opacity(0.2), location: 0),
+                                .init(color: Color.accentColor.opacity(0), location: 1)
+                            ]),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        ),
+                        lineWidth: 0.5
+                    )
             )
         }
         .frame(height: 157.03)

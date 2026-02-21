@@ -23,19 +23,23 @@ struct SearchStateView: View {
             .padding(.top)
             .padding()
         } else if hasNoResults {
-            VStack(spacing: 8) {
+            VStack(spacing: 12) {
                 Image(systemName: "magnifyingglass")
-                    .font(.largeTitle)
-                    .foregroundColor(.secondary)
-                Text("No Search Results Found")
-                    .font(.headline)
-                Text("Try different search terms")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                    .font(.system(size: 40))
+                    .foregroundStyle(.tertiary)
+                
+                VStack(spacing: 4) {
+                    Text("No Search Results Found")
+                        .font(.headline)
+                        .foregroundStyle(.primary)
+                    Text("Try different search terms")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
             }
             .padding()
             .frame(maxWidth: .infinity)
-            .padding(.top)
+            .padding(.top, 40)
         }
     }
 } 

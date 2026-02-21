@@ -272,10 +272,10 @@ struct MediaInfoView: View {
                     dismiss()
                 }) {
                     Image(systemName: "chevron.left")
-                        .font(.system(size: 24))
+                        .font(.system(size: 18, weight: .semibold))
                         .foregroundColor(.primary)
                         .padding(12)
-                        .background(Color(.systemBackground).opacity(0.8))
+                        .background(.ultraThinMaterial)
                         .clipShape(Circle())
                         .circularGradientOutline()
                 }
@@ -348,19 +348,20 @@ struct MediaInfoView: View {
     
     @ViewBuilder
     private var gradientOverlay: some View {
+        let bgColor = colorScheme == .dark ? Color.black : Color.white
         LinearGradient(
             gradient: Gradient(stops: [
-                .init(color: (colorScheme == .dark ? Color.black : Color.white).opacity(0.0), location: 0.0),
-                .init(color: (colorScheme == .dark ? Color.black : Color.white).opacity(0.5), location: 0.2),
-                .init(color: (colorScheme == .dark ? Color.black : Color.white).opacity(0.8), location: 0.5),
-                .init(color: (colorScheme == .dark ? Color.black : Color.white), location: 1.0)
+                .init(color: bgColor.opacity(0.0), location: 0.0),
+                .init(color: bgColor.opacity(0.5), location: 0.2),
+                .init(color: bgColor.opacity(0.8), location: 0.5),
+                .init(color: bgColor, location: 1.0)
             ]),
             startPoint: .top,
             endPoint: .bottom
         )
         .frame(height: 300)
         .clipShape(RoundedRectangle(cornerRadius: 0))
-        .shadow(color: (colorScheme == .dark ? Color.black : Color.white).opacity(1), radius: 10, x: 0, y: 10)
+        .shadow(color: bgColor, radius: 10, x: 0, y: 10)
     }
     
     @ViewBuilder
@@ -454,7 +455,7 @@ struct MediaInfoView: View {
                     .frame(width: 16, height: 22)
                     .foregroundColor(.primary)
                     .padding(12)
-                    .background(Color.gray.opacity(0.2))
+                    .background(.ultraThinMaterial)
                     .clipShape(Circle())
                     .circularGradientOutline()
             }
@@ -475,8 +476,8 @@ struct MediaInfoView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 6)
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(15)
+                    .background(.ultraThinMaterial)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
                     .gradientOutline()
                 }
                 
@@ -490,8 +491,8 @@ struct MediaInfoView: View {
                     }
                     .frame(maxWidth: 120)
                     .padding(.vertical, 6)
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(15)
+                    .background(.ultraThinMaterial)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
                     .gradientOutline()
                 }
                 
@@ -501,7 +502,7 @@ struct MediaInfoView: View {
                         .frame(width: 16, height: 16)
                         .foregroundColor(.primary)
                         .padding(6)
-                        .background(Color.gray.opacity(0.2))
+                        .background(.ultraThinMaterial)
                         .clipShape(Circle())
                         .circularGradientOutline()
                 }
@@ -513,12 +514,12 @@ struct MediaInfoView: View {
                 Text(NSLocalizedString("Why am I not seeing any episodes?", comment: ""))
                     .font(.caption)
                     .bold()
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Text(NSLocalizedString("The module provided only a single episode, this is most likely a movie, so we decided to make separate screens for these cases.", comment: ""))
                     .font(.caption)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.secondary)
                     .multilineTextAlignment(.leading)
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
@@ -600,10 +601,21 @@ struct MediaInfoView: View {
     
     @ViewBuilder
     private var episodesSectionHeader: some View {
-        HStack {
+        HStack(alignment: .center) {
             Text(NSLocalizedString("Episodes", comment: ""))
                 .font(.system(size: 22, weight: .bold))
                 .foregroundColor(.primary)
+            
+            Text("\(currentEpisodeList.count)")
+                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                .foregroundStyle(.secondary)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 3)
+                .background(
+                    Capsule()
+                        .fill(Color.gray.opacity(0.15))
+                )
+            
             Spacer()
             sourceButton
             menuButton
@@ -638,7 +650,7 @@ struct MediaInfoView: View {
     
     @ViewBuilder
     private var flatEpisodeList: some View {
-        VStack(spacing: 15) {
+        VStack(spacing: 10) {
             ForEach(episodeLinks.indices.filter { selectedRange.contains($0) }, id: \.self) { i in
                 let ep = episodeLinks[i]
                 createEpisodeCell(episode: ep, index: i, season: 1)
@@ -650,7 +662,7 @@ struct MediaInfoView: View {
     private var seasonsEpisodeList: some View {
         let seasons = groupedEpisodes()
         if !seasons.isEmpty, selectedSeason < seasons.count {
-            VStack(spacing: 15) {
+            VStack(spacing: 10) {
                 ForEach(seasons[selectedSeason]) { ep in
                     createEpisodeCell(episode: ep, index: selectedSeason, season: selectedSeason + 1)
                 }
@@ -839,7 +851,7 @@ struct MediaInfoView: View {
                 .frame(width: 16, height: 16)
                 .foregroundColor(.primary)
                 .padding(6)
-                .background(Color.gray.opacity(0.2))
+                .background(.ultraThinMaterial)
                 .clipShape(Circle())
                 .circularGradientOutline()
         }
@@ -855,7 +867,7 @@ struct MediaInfoView: View {
                 .frame(width: 16, height: 4)
                 .foregroundColor(.primary)
                 .padding(12)
-                .background(Color.gray.opacity(0.2))
+                .background(.ultraThinMaterial)
                 .clipShape(Circle())
                 .circularGradientOutline()
         }

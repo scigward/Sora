@@ -25,11 +25,29 @@ struct SearchHistorySection<Content: View>: View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title.uppercased())
                 .font(.footnote)
+                .fontWeight(.medium)
                 .foregroundStyle(Color.secondary)
                 .padding(.horizontal, 20)
             VStack(spacing: 0) {
                 content
             }
+            .background(.ultraThinMaterial)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .strokeBorder(
+                        LinearGradient(
+                            gradient: Gradient(stops: [
+                                .init(color: Color.accentColor.opacity(0.2), location: 0),
+                                .init(color: Color.accentColor.opacity(0), location: 1)
+                            ]),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        ),
+                        lineWidth: 0.5
+                    )
+            )
+            .padding(.horizontal, 20)
         }
         .padding(.vertical, 16)
     }
@@ -43,23 +61,27 @@ struct SearchHistoryRow: View {
     var showDivider: Bool = true
     
     var body: some View {
-        HStack {
-            Image(systemName: "clock")
+        HStack(spacing: 12) {
+            Image(systemName: "clock.arrow.circlepath")
+                .font(.system(size: 14))
+                .foregroundStyle(Color.secondary)
                 .frame(width: 24, height: 24)
-                .foregroundStyle(Color.primary)
             
             Text(text)
+                .font(.body)
                 .foregroundStyle(Color.primary)
+                .lineLimit(1)
             
             Spacer()
             
             Button(action: onDelete) {
-                Image(systemName: "xmark.circle.fill")
-                    .foregroundStyle(Color.secondary)
+                Image(systemName: "xmark")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(.tertiary)
             }
         }
         .padding(.horizontal, 16)
-        .padding(.vertical, 12)
+        .padding(.vertical, 11)
         .contentShape(Rectangle())
         .onTapGesture(perform: onTap)
         
@@ -79,7 +101,7 @@ struct SearchBar: View {
         HStack {
             HStack {
                 Image(systemName: "magnifyingglass")
-                    .foregroundColor(.gray)
+                    .foregroundColor(.secondary)
                 
                 TextField("Search", text: $text)
                     .focused($isFocused)
@@ -89,7 +111,6 @@ struct SearchBar: View {
                     .disableAutocorrection(true)
                     .textInputAutocapitalization(.never)
                     .onChange(of: text) { _ in
-                        // This triggers search while typing
                         NotificationCenter.default.post(name: .tabBarSearchQueryUpdated, object: nil, userInfo: ["searchQuery": text])
                     }
                     .onSubmit {
@@ -102,13 +123,28 @@ struct SearchBar: View {
                         isFocused = false
                     }) {
                         Image(systemName: "xmark.circle.fill")
-                            .foregroundColor(.gray)
+                            .foregroundColor(.secondary)
                     }
                 }
             }
-            .padding(8)
-            .background(Color(.systemGray6))
-            .cornerRadius(10)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 10)
+            .background(.ultraThinMaterial)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
+            .overlay(
+                RoundedRectangle(cornerRadius: 12)
+                    .strokeBorder(
+                        LinearGradient(
+                            gradient: Gradient(stops: [
+                                .init(color: Color.accentColor.opacity(0.2), location: 0),
+                                .init(color: Color.accentColor.opacity(0), location: 1)
+                            ]),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        ),
+                        lineWidth: 0.5
+                    )
+            )
         }
     }
 }

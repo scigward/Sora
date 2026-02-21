@@ -142,15 +142,15 @@ struct DownloadView: View {
     }
     
     private var emptyActiveDownloadsView: some View {
-        VStack(spacing: 20) {
+        VStack(spacing: 16) {
             Image(systemName: "arrow.down.circle")
-                .font(.largeTitle)
-                .foregroundStyle(.secondary)
+                .font(.system(size: 48))
+                .foregroundStyle(.tertiary)
             
-            VStack(spacing: 8) {
+            VStack(spacing: 6) {
                 Text(NSLocalizedString("No Active Downloads", comment: ""))
-                    .font(.title2)
-                    .fontWeight(.medium)
+                    .font(.title3)
+                    .fontWeight(.semibold)
                     .foregroundStyle(.primary)
                 
                 Text(NSLocalizedString("Actively downloading media can be tracked from here.", comment: ""))
@@ -164,15 +164,15 @@ struct DownloadView: View {
     }
     
     private var emptyDownloadsView: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "arrow.down.circle")                                    
-                .font(.largeTitle)
-                .foregroundStyle(.secondary)
+        VStack(spacing: 16) {
+            Image(systemName: "arrow.down.circle")
+                .font(.system(size: 48))
+                .foregroundStyle(.tertiary)
             
-            VStack(spacing: 8) {
+            VStack(spacing: 6) {
                 Text(NSLocalizedString("No Downloads", comment: ""))
-                    .font(.title2)
-                    .fontWeight(.medium)
+                    .font(.title3)
+                    .fontWeight(.semibold)
                     .foregroundStyle(.primary)
                 
                 Text(NSLocalizedString("Your downloaded episodes will appear here", comment: ""))
@@ -313,7 +313,7 @@ struct CustomDownloadHeader: View {
                 
                 Spacer()
                 
-                HStack(spacing: 16) {
+                HStack(spacing: 12) {
                     Button(action: {
                         withAnimation(.easeInOut(duration: 0.3)) {
                             isSearchActive.toggle()
@@ -322,17 +322,12 @@ struct CustomDownloadHeader: View {
                             searchText = ""
                         }
                     }) {
-                        Image(systemName: isSearchActive ? "xmark.circle.fill" : "magnifyingglass")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 18, height: 18)
-                            .foregroundColor(.accentColor)
-                            .padding(10)
-                            .background(
-                                Circle()
-                                    .fill(Color.gray.opacity(0.2))
-                                    .shadow(color: .accentColor.opacity(0.2), radius: 2)
-                            )
+                        Image(systemName: isSearchActive ? "xmark" : "magnifyingglass")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(.primary)
+                            .frame(width: 36, height: 36)
+                            .background(.ultraThinMaterial)
+                            .clipShape(Circle())
                             .circularGradientOutline()
                     }
 
@@ -352,16 +347,11 @@ struct CustomDownloadHeader: View {
                             }
                         } label: {
                             Image(systemName: "arrow.up.arrow.down")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 18, height: 18)
-                                .foregroundColor(.accentColor)
-                                .padding(10)
-                                .background(
-                                    Circle()
-                                        .fill(Color.gray.opacity(0.2))
-                                        .shadow(color: .accentColor.opacity(0.2), radius: 2)
-                                )
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(.primary)
+                                .frame(width: 36, height: 36)
+                                .background(.ultraThinMaterial)
+                                .clipShape(Circle())
                                 .circularGradientOutline()
                         }
                     }
@@ -405,13 +395,13 @@ struct CustomDownloadHeader: View {
                             .strokeBorder(
                                 LinearGradient(
                                     gradient: Gradient(stops: [
-                                        .init(color: Color.accentColor.opacity(0.25), location: 0),
+                                        .init(color: Color.accentColor.opacity(0.2), location: 0),
                                         .init(color: Color.accentColor.opacity(0), location: 1)
                                     ]),
                                     startPoint: .top,
                                     endPoint: .bottom
                                 ),
-                                lineWidth: 1.5
+                                lineWidth: 0.5
                             )
                     )
                 }
@@ -424,7 +414,7 @@ struct CustomDownloadHeader: View {
             }
             
             VStack(spacing: 0) {
-                HStack(spacing: 0) {
+                HStack(spacing: 4) {
                     TabButton(
                         title: NSLocalizedString("Active", comment: ""),
                         icon: "arrow.down.circle",
@@ -439,8 +429,13 @@ struct CustomDownloadHeader: View {
                         action: { selectedTab = 1 }
                     )
                 }
+                .padding(4)
+                .background(
+                    Capsule()
+                        .fill(Color.gray.opacity(0.12))
+                )
                 .padding(.horizontal, 20)
-                .padding(.vertical, 16)
+                .padding(.vertical, 12)
             }
         }
     }
@@ -449,49 +444,41 @@ struct CustomDownloadHeader: View {
 struct TabButton: View {
     let title: String
     let icon: String
+    let selectedIcon: String
     let isSelected: Bool
     let action: () -> Void
+    
+    init(title: String, icon: String, isSelected: Bool, action: @escaping () -> Void) {
+        self.title = title
+        self.icon = icon
+        self.selectedIcon = icon + ".fill"
+        self.isSelected = isSelected
+        self.action = action
+    }
 
+    @Environment(\.colorScheme) private var colorScheme
+    
     var body: some View {
         Button(action: action) {
-            HStack(spacing: 8) {
-                Image(systemName: icon)
-                    .font(.body)
-                    .foregroundColor(isSelected ? .accentColor : .secondary)
+            HStack(spacing: 6) {
+                Image(systemName: isSelected ? selectedIcon : icon)
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundColor(isSelected ? (colorScheme == .dark ? .black : .white) : .secondary)
                 Text(title)
-                    .font(.body)
-                    .fontWeight(isSelected ? .semibold : .regular)
-                    .foregroundColor(isSelected ? .accentColor : .secondary)
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundColor(isSelected ? (colorScheme == .dark ? .black : .white) : .secondary)
             }
             .frame(maxWidth: .infinity)
-            .padding(.vertical, 12)
-            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+            .padding(.horizontal, 14)
             .background(
-                RoundedRectangle(cornerRadius: 12)
-                    .fill(isSelected ? Color.accentColor.opacity(0.1) : Color.clear)
+                Capsule()
+                    .fill(isSelected ? Color.primary : Color.clear)
             )
-            .overlay(
-                RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(
-                        isSelected
-                            ? AnyShapeStyle(
-                                LinearGradient(
-                                    gradient: Gradient(stops: [
-                                        .init(color: Color.accentColor.opacity(0.25), location: 0),
-                                        .init(color: Color.accentColor.opacity(0), location: 1)
-                                    ]),
-                                    startPoint: .top,
-                                    endPoint: .bottom
-                                )
-                            )
-                            : AnyShapeStyle(Color.clear),
-                        lineWidth: 1.5
-                    )
-            )
-            .contentShape(Rectangle())
+            .contentShape(Capsule())
         }
         .buttonStyle(PlainButtonStyle())
-        .animation(.easeInOut(duration: 0.2), value: isSelected)
+        .animation(.spring(response: 0.35, dampingFraction: 0.8), value: isSelected)
     }
 }
 
@@ -528,22 +515,6 @@ struct DownloadSectionView: View {
                     EnhancedActiveDownloadCard(download: download)
                 }
             }
-            .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 16))
-            .overlay(
-                RoundedRectangle(cornerRadius: 16)
-                    .strokeBorder(
-                        LinearGradient(
-                            gradient: Gradient(stops: [
-                                .init(color: Color.accentColor.opacity(0.3), location: 0),
-                                .init(color: Color.accentColor.opacity(0), location: 1)
-                            ]),
-                            startPoint: .top,
-                            endPoint: .bottom
-                        ),
-                        lineWidth: 0.5
-                    )
-            )
             .padding(.horizontal, 20)
         }
     }
@@ -606,7 +577,7 @@ struct DownloadSummaryCard: View {
                 .strokeBorder(
                     LinearGradient(
                         gradient: Gradient(stops: [
-                            .init(color: Color.accentColor.opacity(0.3), location: 0),
+                            .init(color: Color.accentColor.opacity(0.2), location: 0),
                             .init(color: Color.accentColor.opacity(0), location: 1)
                         ]),
                         startPoint: .top,
@@ -632,20 +603,19 @@ struct SummaryItem: View {
     let icon: String
     
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 6) {
             Image(systemName: icon)
-                .font(.title2)
+                .font(.system(size: 20))
                 .foregroundColor(.accentColor)
 
             if !value.isEmpty {
                 Text(value)
-                    .font(.title3)
-                    .fontWeight(.semibold)
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
                     .foregroundStyle(.primary)
             }
 
             Text(title)
-                .font(.caption)
+                .font(.system(size: 11, weight: .medium))
                 .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity)
@@ -734,47 +704,47 @@ struct EnhancedActiveDownloadCard: View {
                                 .aspectRatio(contentMode: .fill)
                                 .clipped()
                         } else {
-                            Rectangle().fill(Color(white: 0.2))
+                            Rectangle().fill(.tertiary)
                         }
                     }
                 } else {
-                    Rectangle().fill(Color(white: 0.2))
+                    Rectangle().fill(.tertiary)
                         .overlay(
                             Image(systemName: "photo")
-                                .foregroundColor(.gray)
+                                .foregroundColor(.secondary)
                         )
                 }
             }
             .frame(width: 56, height: 56)
-            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+            .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             
             // Center VStack
             VStack(alignment: .leading, spacing: 4) {
                 Text(download.title ?? download.originalURL.lastPathComponent)
                     .font(.headline)
-                    .foregroundColor(.white)
+                    .foregroundColor(.primary)
                     .lineLimit(1)
                 
                 HStack {
                     Text("\(Int(currentProgress * 100))%")
                         .font(.subheadline)
                         .fontWeight(.bold)
-                        .foregroundColor(.white)
+                        .foregroundColor(.primary)
                     Spacer()
                     HStack(spacing: 6) {
                         Circle()
                             .fill(Color.green)
-                            .frame(width: 10, height: 10)
+                            .frame(width: 8, height: 8)
                         Text(statusText)
                             .font(.subheadline)
                             .fontWeight(.semibold)
-                            .foregroundColor(Color(white: 0.7))
+                            .foregroundColor(.secondary)
                             .lineLimit(1)
                     }
                 }
                 
                 ProgressView(value: currentProgress)
-                    .progressViewStyle(LinearProgressViewStyle(tint: Color(white: 0.7)))
+                    .progressViewStyle(LinearProgressViewStyle(tint: .accentColor))
                     .frame(height: 4)
                     .cornerRadius(2)
             }
@@ -839,19 +809,15 @@ struct EnhancedActiveDownloadCard: View {
         .padding(12)
         .background(
             RoundedRectangle(cornerRadius: 14, style: .continuous)
-                .fill(Color(UIColor.systemBackground))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(Color.gray.opacity(0.2))
-                )
+                .fill(.ultraThinMaterial)
         )
         .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: 14)
-                .stroke(
+                .strokeBorder(
                     LinearGradient(
                         gradient: Gradient(stops: [
-                            .init(color: Color.accentColor.opacity(0.25), location: 0),
+                            .init(color: Color.accentColor.opacity(0.2), location: 0),
                             .init(color: Color.accentColor.opacity(0), location: 1)
                         ]),
                         startPoint: .top,
@@ -987,7 +953,7 @@ struct EnhancedDownloadGroupCard: View {
                     .strokeBorder(
                         LinearGradient(
                             gradient: Gradient(stops: [
-                                .init(color: Color.accentColor.opacity(0.3), location: 0),
+                                .init(color: Color.accentColor.opacity(0.2), location: 0),
                                 .init(color: Color.accentColor.opacity(0), location: 1)
                             ]),
                             startPoint: .top,
@@ -1083,7 +1049,7 @@ struct EnhancedShowEpisodesView: View {
                         .font(.system(size: 24))
                         .foregroundColor(.primary)
                         .padding(12)
-                        .background(Color.gray.opacity(0.2))
+                        .background(.ultraThinMaterial)
                         .clipShape(Circle())
                         .circularGradientOutline()
                 }
@@ -1131,17 +1097,7 @@ struct EnhancedShowEpisodesView: View {
     
     private var placeholderGradient: some View {
         Rectangle()
-            .fill(
-                LinearGradient(
-                    gradient: Gradient(colors: [
-                        Color.gray.opacity(0.2),
-                        Color.gray.opacity(0.3),
-                        Color.gray.opacity(0.2)
-                    ]),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
-            )
+            .fill(.ultraThinMaterial)
             .frame(width: UIScreen.main.bounds.width, height: 700)
             .clipped()
     }
@@ -1167,19 +1123,20 @@ struct EnhancedShowEpisodesView: View {
     
     @ViewBuilder
     private var gradientOverlay: some View {
+        let bgColor = colorScheme == .dark ? Color.black : Color.white
         LinearGradient(
             gradient: Gradient(stops: [
-                .init(color: (colorScheme == .dark ? Color.black : Color.white).opacity(0.0), location: 0.0),
-                .init(color: (colorScheme == .dark ? Color.black : Color.white).opacity(0.5), location: 0.2),
-                .init(color: (colorScheme == .dark ? Color.black : Color.white).opacity(0.8), location: 0.5),
-                .init(color: (colorScheme == .dark ? Color.black : Color.white), location: 1.0)
+                .init(color: bgColor.opacity(0.0), location: 0.0),
+                .init(color: bgColor.opacity(0.5), location: 0.2),
+                .init(color: bgColor.opacity(0.8), location: 0.5),
+                .init(color: bgColor, location: 1.0)
             ]),
             startPoint: .top,
             endPoint: .bottom
         )
         .frame(height: 300)
         .clipShape(RoundedRectangle(cornerRadius: 0))
-        .shadow(color: (colorScheme == .dark ? Color.black : Color.white).opacity(1), radius: 10, x: 0, y: 10)
+        .shadow(color: bgColor, radius: 10, x: 0, y: 10)
     }
     
     @ViewBuilder
@@ -1254,7 +1211,7 @@ struct EnhancedShowEpisodesView: View {
                     .fontWeight(.medium)
                     .foregroundColor(.secondary)
             }
-            VStack(spacing: 8) {
+            VStack(spacing: 10) {
                 ForEach(Array(sortedEpisodes.enumerated()), id: \.element.id) { index, asset in
                     EnhancedEpisodeRow(
                         asset: asset,
@@ -1327,75 +1284,98 @@ struct EnhancedEpisodeRow: View {
     let onDelete: (DownloadedAsset) -> Void
 
     @Environment(\.colorScheme) private var colorScheme
-    private var fillerBadgeOpacity: Double { colorScheme == .dark ? 0.18 : 0.12 }
+    @AppStorage("remainingTimePercentage") private var remainingTimePercentage: Double = 90.0
+    @State private var currentProgress: Double = 0.0
+
     var body: some View {
-        HStack {
-            // Thumbnail
-            Group {
-                if let backdropURL = asset.metadata?.backdropURL ?? asset.metadata?.posterURL {
-                    LazyImage(url: backdropURL) { state in
-                        if let uiImage = state.imageContainer?.image {
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .aspectRatio(16/9, contentMode: .fill)
-                        } else {
-                            Rectangle()
-                                .fill(.tertiary)
-                                .overlay(
-                                    Image(systemName: "photo")
-                                        .foregroundColor(.secondary)
-                                )
+        HStack(spacing: 12) {
+            // Thumbnail with episode number badge and progress overlay
+            ZStack(alignment: .bottomLeading) {
+                thumbnailImage
+                
+                // Episode number badge
+                Text("\(asset.metadata?.episode ?? 0)")
+                    .font(.system(size: 11, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                    .padding(.horizontal, 7)
+                    .padding(.vertical, 3)
+                    .background(
+                        Capsule()
+                            .fill(.ultraThinMaterial)
+                            .environment(\.colorScheme, .dark)
+                    )
+                    .padding(6)
+                
+                // Progress bar at bottom of thumbnail
+                if currentProgress > 0 {
+                    VStack {
+                        Spacer()
+                        GeometryReader { geo in
+                            let isComplete = currentProgress >= remainingTimePercentage / 100.0
+                            
+                            ZStack(alignment: .leading) {
+                                Rectangle()
+                                    .fill(Color.white.opacity(0.3))
+                                    .frame(height: 3)
+                                
+                                Rectangle()
+                                    .fill(isComplete ? Color.green : Color.accentColor)
+                                    .frame(width: geo.size.width * min(CGFloat(currentProgress), 1.0), height: 3)
+                            }
                         }
+                        .frame(height: 3)
+                        .clipShape(Capsule())
+                        .padding(.horizontal, 6)
+                        .padding(.bottom, 6)
                     }
-                } else {
-                    Rectangle()
-                        .fill(.tertiary)
-                        .overlay(
-                            Image(systemName: "photo")
-                                .foregroundColor(.secondary)
-                        )
                 }
             }
-            .frame(width: 100, height: 56)
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-
-            VStack(alignment: .leading) {
-                HStack(spacing: 8) {
+            .frame(width: 130, height: 76)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            
+            // Episode info
+            VStack(alignment: .leading, spacing: 4) {
+                HStack(spacing: 6) {
                     Text("Episode \(asset.metadata?.episode ?? 0)")
-                        .font(.system(size: 15))
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundColor(.primary)
+                    
                     if asset.metadata?.isFiller == true {
-                        Text("Filler")
-                            .font(.system(size: 12, weight: .semibold))
-                            .padding(.horizontal, 8)
-                            .padding(.vertical, 4)
-                            .background(Color.red.opacity(fillerBadgeOpacity), in: Capsule())
+                        Text("FILLER")
+                            .font(.system(size: 9, weight: .bold, design: .rounded))
+                            .tracking(0.5)
+                            .foregroundColor(.red)
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(
+                                Capsule()
+                                    .fill(Color.red.opacity(colorScheme == .dark ? 0.18 : 0.10))
+                            )
                             .overlay(
                                 Capsule()
-                                    .stroke(Color.red.opacity(0.24), lineWidth: 0.6)
+                                    .strokeBorder(Color.red.opacity(0.2), lineWidth: 0.5)
                             )
-                            .foregroundColor(.red)
                     }
                 }
+                
                 if let title = asset.metadata?.title {
                     Text(title)
                         .font(.system(size: 13))
                         .foregroundColor(.secondary)
-                        .lineLimit(1)
+                        .lineLimit(2)
                 }
             }
 
             Spacer()
 
-            CircularProgressBar(progress: 0.0)
-                .frame(width: 40, height: 40)
-                .padding(.trailing, 4)
+            CircularProgressBar(progress: currentProgress)
+                .frame(width: 34, height: 34)
         }
         .contentShape(Rectangle())
-        .padding(.horizontal, 8)
-        .padding(.vertical, 8)
+        .padding(10)
         .frame(maxWidth: .infinity)
         .background(cellBackground)
-        .clipShape(RoundedRectangle(cornerRadius: 15))
+        .clipShape(RoundedRectangle(cornerRadius: 14))
         .swipeActions(edge: .trailing) {
             Button(role: .destructive, action: {
                 onDelete(asset)
@@ -1406,21 +1386,64 @@ struct EnhancedEpisodeRow: View {
         .onTapGesture {
             onPlay(asset)
         }
+        .onAppear {
+            updateProgress()
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("episodeProgressChanged"))) { _ in
+            updateProgress()
+        }
+    }
+    
+    private func updateProgress() {
+        let key = asset.originalURL.absoluteString
+        let lastPlayedTime = UserDefaults.standard.double(forKey: "lastPlayedTime_\(key)")
+        let totalTime = UserDefaults.standard.double(forKey: "totalTime_\(key)")
+        currentProgress = totalTime > 0 ? min(lastPlayedTime / totalTime, 1.0) : 0
+    }
+    
+    private var thumbnailImage: some View {
+        Group {
+            if let backdropURL = asset.metadata?.backdropURL ?? asset.metadata?.posterURL {
+                LazyImage(url: backdropURL) { state in
+                    if let uiImage = state.imageContainer?.image {
+                        Image(uiImage: uiImage)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: 130, height: 76)
+                            .clipped()
+                    } else {
+                        Rectangle()
+                            .fill(.tertiary)
+                            .frame(width: 130, height: 76)
+                            .overlay(
+                                Image(systemName: "play.rectangle.fill")
+                                    .font(.system(size: 20))
+                                    .foregroundColor(.secondary)
+                            )
+                    }
+                }
+            } else {
+                Rectangle()
+                    .fill(.tertiary)
+                    .frame(width: 130, height: 76)
+                    .overlay(
+                        Image(systemName: "play.rectangle.fill")
+                            .font(.system(size: 20))
+                            .foregroundColor(.secondary)
+                    )
+            }
+        }
     }
 
     private var cellBackground: some View {
-        RoundedRectangle(cornerRadius: 15)
-            .fill(Color(UIColor.systemBackground))
+        RoundedRectangle(cornerRadius: 14)
+            .fill(.ultraThinMaterial)
             .overlay(
-                RoundedRectangle(cornerRadius: 15)
-                    .fill(Color.gray.opacity(0.2))
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 15)
-                    .stroke(
+                RoundedRectangle(cornerRadius: 14)
+                    .strokeBorder(
                         LinearGradient(
                             gradient: Gradient(stops: [
-                                .init(color: Color.accentColor.opacity(0.25), location: 0),
+                                .init(color: Color.accentColor.opacity(0.2), location: 0),
                                 .init(color: Color.accentColor.opacity(0), location: 1)
                             ]),
                             startPoint: .top,
@@ -1438,13 +1461,13 @@ struct SearchableStyleModifier: ViewModifier {
             .searchable(text: .constant(""), prompt: "")
             .background(
                 RoundedRectangle(cornerRadius: 15)
-                    .fill(Color.gray.opacity(0.2))
+                    .fill(.ultraThinMaterial)
                     .overlay(
                         RoundedRectangle(cornerRadius: 15)
-                            .stroke(
+                            .strokeBorder(
                                 LinearGradient(
                                     gradient: Gradient(stops: [
-                                        .init(color: Color.accentColor.opacity(0.25), location: 0),
+                                        .init(color: Color.accentColor.opacity(0.2), location: 0),
                                         .init(color: Color.accentColor.opacity(0), location: 1)
                                     ]),
                                     startPoint: .top,

@@ -21,10 +21,11 @@ fileprivate struct SettingsSection<Content: View>: View {
     }
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
+        VStack(alignment: .leading, spacing: 6) {
             Text(title.uppercased())
                 .font(.footnote)
-                .foregroundStyle(.gray)
+                .fontWeight(.medium)
+                .foregroundStyle(.secondary)
                 .padding(.horizontal, 20)
             
             VStack(spacing: 0) {
@@ -51,7 +52,7 @@ fileprivate struct SettingsSection<Content: View>: View {
             if let footer = footer {
                 Text(footer)
                     .font(.footnote)
-                    .foregroundStyle(.gray)
+                    .foregroundStyle(.secondary)
                     .padding(.horizontal, 20)
                     .padding(.top, 4)
             }
@@ -130,7 +131,7 @@ struct SettingsViewTrackers: View {
                                         .padding(.trailing, 10)
                                 } else {
                                     RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color.gray.opacity(0.3))
+                                        .fill(.ultraThinMaterial)
                                         .frame(width: 60, height: 60)
                                         .shimmering()
                                 }
@@ -149,7 +150,7 @@ struct SettingsViewTrackers: View {
                                     HStack(spacing: 0) {
                                         Text(NSLocalizedString("Logged in as ", comment: ""))
                                             .font(.footnote)
-                                            .foregroundStyle(.gray)
+                                            .foregroundStyle(.secondary)
                                         Text(anilistUsername)
                                             .font(.footnote)
                                             .fontWeight(.medium)
@@ -159,7 +160,7 @@ struct SettingsViewTrackers: View {
                                 } else {
                                     Text(NSLocalizedString("You are not logged in", comment: ""))
                                         .font(.footnote)
-                                        .foregroundStyle(.gray)
+                                        .foregroundStyle(.secondary)
                                         .frame(height: 18)
                                 }
                             }
@@ -223,7 +224,7 @@ struct SettingsViewTrackers: View {
                                         .padding(.trailing, 10)
                                 } else {
                                     RoundedRectangle(cornerRadius: 10)
-                                        .fill(Color.gray.opacity(0.3))
+                                        .fill(.ultraThinMaterial)
                                         .frame(width: 60, height: 60)
                                         .shimmering()
                                 }
@@ -242,7 +243,7 @@ struct SettingsViewTrackers: View {
                                     HStack(spacing: 0) {
                                         Text(NSLocalizedString("Logged in as ", comment: ""))
                                             .font(.footnote)
-                                            .foregroundStyle(.gray)
+                                            .foregroundStyle(.secondary)
                                         Text(traktUsername)
                                             .font(.footnote)
                                             .fontWeight(.medium)
@@ -252,7 +253,7 @@ struct SettingsViewTrackers: View {
                                 } else {
                                     Text(NSLocalizedString("You are not logged in", comment: ""))
                                         .font(.footnote)
-                                        .foregroundStyle(.gray)
+                                        .foregroundStyle(.secondary)
                                         .frame(height: 18)
                                 }
                             }

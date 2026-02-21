@@ -33,7 +33,7 @@ struct AnilistMatchPopupView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("".uppercased())
                         .font(.footnote)
-                        .foregroundStyle(.gray)
+                        .foregroundStyle(.secondary)
                         .padding(.horizontal, 10)
 
                     VStack(spacing: 0) {
@@ -44,7 +44,7 @@ struct AnilistMatchPopupView: View {
                         } else if results.isEmpty {
                             Text("No AniList matches found")
                                 .font(.subheadline)
-                                .foregroundStyle(.gray)
+                                .foregroundStyle(.secondary)
                                 .frame(maxWidth: .infinity)
                                 .padding()
                         } else {
@@ -130,7 +130,7 @@ struct AnilistMatchPopupView: View {
                     if !results.isEmpty {
                         Text("Tap a title to override the current match.")
                             .font(.footnote)
-                            .foregroundStyle(.gray)
+                            .foregroundStyle(.secondary)
                             .padding(.horizontal, 20)
                             .padding(.top, 4)
                     }

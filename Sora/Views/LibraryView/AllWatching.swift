@@ -102,8 +102,8 @@ struct AllWatchingView: View {
                             .padding(10)
                             .background(
                                 Circle()
-                                    .fill(Color.gray.opacity(0.2))
-                                    .shadow(color: .accentColor.opacity(0.2), radius: 2)
+                                    .fill(.ultraThinMaterial)
+                                    
                             )
                             .circularGradientOutline()
                     }
@@ -130,8 +130,8 @@ struct AllWatchingView: View {
                             .padding(10)
                             .background(
                                 Circle()
-                                    .fill(Color.gray.opacity(0.2))
-                                    .shadow(color: .accentColor.opacity(0.2), radius: 2)
+                                    .fill(.ultraThinMaterial)
+                                    
                             )
                             .circularGradientOutline()
                     }
@@ -160,8 +160,8 @@ struct AllWatchingView: View {
                             .padding(10)
                             .background(
                                 Circle()
-                                    .fill(Color.gray.opacity(0.2))
-                                    .shadow(color: .accentColor.opacity(0.2), radius: 2)
+                                    .fill(.ultraThinMaterial)
+                                    
                             )
                             .circularGradientOutline()
                     }
@@ -389,7 +389,7 @@ struct FullWidthContinueWatchingCell: View {
                             .clipped()
                     } else {
                         RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.gray.opacity(0.3))
+                            .fill(.ultraThinMaterial)
                             .frame(height: 157.03)
                             .shimmering()
                     }
@@ -450,7 +450,7 @@ struct FullWidthContinueWatchingCell: View {
                                             .clipShape(Circle())
                                     } else {
                                         Circle()
-                                            .fill(Color.gray.opacity(0.3))
+                                            .fill(.ultraThinMaterial)
                                             .frame(width: 32, height: 32)
                                     }
                                 }
