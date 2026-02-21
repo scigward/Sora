@@ -171,11 +171,26 @@ struct LibraryView: View {
                 NavigationLink(destination: AllWatchingView()) {
                     Text(LocalizedStringKey("View All"))
                         .font(.subheadline)
+                        .fontWeight(.medium)
+                        .foregroundColor(.secondary)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(15)
-                        .gradientOutline()
+                        .background(.ultraThinMaterial)
+                        .clipShape(Capsule())
+                        .overlay(
+                            Capsule()
+                                .strokeBorder(
+                                    LinearGradient(
+                                        gradient: Gradient(stops: [
+                                            .init(color: Color.accentColor.opacity(0.2), location: 0),
+                                            .init(color: Color.accentColor.opacity(0), location: 1)
+                                        ]),
+                                        startPoint: .top,
+                                        endPoint: .bottom
+                                    ),
+                                    lineWidth: 0.5
+                                )
+                        )
                 }
             }
             .padding(.horizontal, 20)
@@ -184,7 +199,7 @@ struct LibraryView: View {
             if continueWatchingItems.isEmpty {
                 VStack(spacing: 12) {
                     Image(systemName: "play.circle")
-                        .font(.system(size: 40))
+                        .font(.system(size: 48))
                         .foregroundStyle(.tertiary)
                     
                     VStack(spacing: 4) {
@@ -228,11 +243,26 @@ struct LibraryView: View {
                 NavigationLink(destination: AllReadingView()) {
                     Text(LocalizedStringKey("View All"))
                         .font(.subheadline)
+                        .fontWeight(.medium)
+                        .foregroundColor(.secondary)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(15)
-                        .gradientOutline()
+                        .background(.ultraThinMaterial)
+                        .clipShape(Capsule())
+                        .overlay(
+                            Capsule()
+                                .strokeBorder(
+                                    LinearGradient(
+                                        gradient: Gradient(stops: [
+                                            .init(color: Color.accentColor.opacity(0.2), location: 0),
+                                            .init(color: Color.accentColor.opacity(0), location: 1)
+                                        ]),
+                                        startPoint: .top,
+                                        endPoint: .bottom
+                                    ),
+                                    lineWidth: 0.5
+                                )
+                        )
                 }
             }
             .padding(.horizontal, 20)
@@ -241,7 +271,7 @@ struct LibraryView: View {
             if continueReadingItems.isEmpty {
                 VStack(spacing: 12) {
                     Image(systemName: "book.closed")
-                        .font(.system(size: 40))
+                        .font(.system(size: 48))
                         .foregroundStyle(.tertiary)
                     
                     VStack(spacing: 4) {
@@ -285,11 +315,26 @@ struct LibraryView: View {
                 NavigationLink(destination: BookmarksDetailView()) {
                     Text(LocalizedStringKey("View All"))
                         .font(.subheadline)
+                        .fontWeight(.medium)
+                        .foregroundColor(.secondary)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
-                        .background(Color.gray.opacity(0.2))
-                        .cornerRadius(15)
-                        .gradientOutline()
+                        .background(.ultraThinMaterial)
+                        .clipShape(Capsule())
+                        .overlay(
+                            Capsule()
+                                .strokeBorder(
+                                    LinearGradient(
+                                        gradient: Gradient(stops: [
+                                            .init(color: Color.accentColor.opacity(0.2), location: 0),
+                                            .init(color: Color.accentColor.opacity(0), location: 1)
+                                        ]),
+                                        startPoint: .top,
+                                        endPoint: .bottom
+                                    ),
+                                    lineWidth: 0.5
+                                )
+                        )
                 }
             }
             .padding(.horizontal, 20)
@@ -446,10 +491,14 @@ struct ContinueWatchingCell: View {
                             .cornerRadius(10)
                             .clipped()
                     } else {
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(Color.gray.opacity(0.3))
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(.ultraThinMaterial)
                             .frame(width: 280, height: 157.03)
-                            .redacted(reason: .placeholder)
+                            .overlay(
+                                Image(systemName: "play.rectangle")
+                                    .font(.system(size: 28))
+                                    .foregroundStyle(.tertiary)
+                            )
                     }
                 }
                 .overlay(
@@ -471,22 +520,23 @@ struct ContinueWatchingCell: View {
                                 Spacer()
                                 Text("\(Int(item.progress * 100))% seen")
                                     .font(.caption)
+                                    .fontWeight(.medium)
                                     .foregroundColor(.white.opacity(0.9))
                             }
                         }
                         .padding(10)
                         .background(
                             LinearGradient(
-                                colors: [
-                                    .black.opacity(0.7),
-                                    .black.opacity(0.0)
-                                ],
+                                gradient: Gradient(stops: [
+                                    .init(color: Color.black.opacity(0.8), location: 0),
+                                    .init(color: Color.black.opacity(0.4), location: 0.6),
+                                    .init(color: Color.clear, location: 1.0)
+                                ]),
                                 startPoint: .bottom,
                                 endPoint: .top
                             )
                                 .clipped()
-                                .cornerRadius(10, corners: [.bottomLeft, .bottomRight])
-                                .shadow(color: .black.opacity(0.3), radius: 3, x: 0, y: 1)
+                                .cornerRadius(12, corners: [.bottomLeft, .bottomRight])
                         )
                     },
                     alignment: .bottom
@@ -503,7 +553,7 @@ struct ContinueWatchingCell: View {
                                 .padding(8)
                         } else {
                             Circle()
-                                .fill(Color.black.opacity(0.5))
+                                .fill(.ultraThinMaterial)
                                 .frame(width: 28, height: 28)
                                 .overlay(
                                     LazyImage(url: URL(string: item.module.metadata.iconUrl)) { state in
@@ -515,7 +565,7 @@ struct ContinueWatchingCell: View {
                                                 .clipShape(Circle())
                                         } else {
                                             Circle()
-                                                .fill(Color.gray.opacity(0.3))
+                                                .fill(.ultraThinMaterial)
                                                 .frame(width: 32, height: 32)
                                         }
                                     }
@@ -527,6 +577,7 @@ struct ContinueWatchingCell: View {
                 )
             }
             .frame(width: 280, height: 157.03)
+            .clipShape(RoundedRectangle(cornerRadius: 12))
         }
         .contextMenu {
             Button(action: {
@@ -676,15 +727,18 @@ struct BookmarksSection: View {
 
 struct EmptyBookmarksView: View {
     var body: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 12) {
             Image(systemName: "folder")
-                .font(.largeTitle)
-                .foregroundColor(.secondary)
-            Text("No Collections")
-                .font(.headline)
-            Text("Create a collection to organize your bookmarks")
-                .font(.caption)
-                .foregroundColor(.secondary)
+                .font(.system(size: 48))
+                .foregroundStyle(.tertiary)
+            VStack(spacing: 4) {
+                Text("No Collections")
+                    .font(.headline)
+                    .foregroundStyle(.primary)
+                Text("Create a collection to organize your bookmarks")
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            }
         }
         .padding()
         .frame(maxWidth: .infinity)

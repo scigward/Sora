@@ -82,8 +82,13 @@ struct ContinueReadingCell: View {
                             .opacity(0.7)
                     } else {
                         Rectangle()
-                            .fill(Color.gray.opacity(0.3))
+                            .fill(.ultraThinMaterial)
                             .frame(width: 280, height: 157.03)
+                            .overlay(
+                                Image(systemName: "book")
+                                    .font(.system(size: 28))
+                                    .foregroundStyle(.tertiary)
+                            )
                     }
                 }
                 .onAppear {
@@ -106,8 +111,9 @@ struct ContinueReadingCell: View {
                             .foregroundColor(.white)
                             .padding(.vertical, 4)
                             .padding(.horizontal, 8)
-                            .background(Color.black.opacity(0.6))
-                            .cornerRadius(4)
+                            .background(.ultraThinMaterial)
+                            .environment(\.colorScheme, .dark)
+                            .cornerRadius(6)
                         
                         Spacer()
                         
@@ -135,8 +141,13 @@ struct ContinueReadingCell: View {
                                 .clipped()
                         } else {
                             Rectangle()
-                                .fill(Color.gray.opacity(0.3))
+                                .fill(.ultraThinMaterial)
                                 .frame(width: 110, height: 157.03)
+                                .overlay(
+                                    Image(systemName: "book")
+                                        .font(.system(size: 20))
+                                        .foregroundStyle(.tertiary)
+                                )
                         }
                     }
                     .onAppear {
@@ -149,10 +160,20 @@ struct ContinueReadingCell: View {
                 }
             }
             .frame(width: 280, height: 157.03)
-            .cornerRadius(10)
+            .cornerRadius(12)
             .overlay(
-                RoundedRectangle(cornerRadius: 10)
-                    .stroke(Color.gray.opacity(0.3), lineWidth: 0.5)
+                RoundedRectangle(cornerRadius: 12)
+                    .strokeBorder(
+                        LinearGradient(
+                            gradient: Gradient(stops: [
+                                .init(color: Color.accentColor.opacity(0.2), location: 0),
+                                .init(color: Color.accentColor.opacity(0), location: 1)
+                            ]),
+                            startPoint: .top,
+                            endPoint: .bottom
+                        ),
+                        lineWidth: 0.5
+                    )
             )
         }
         .contextMenu {
