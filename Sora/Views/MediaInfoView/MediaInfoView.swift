@@ -455,7 +455,7 @@ struct MediaInfoView: View {
                     .frame(width: 16, height: 22)
                     .foregroundColor(.primary)
                     .padding(12)
-                    .background(Color.gray.opacity(0.2))
+                    .background(.ultraThinMaterial)
                     .clipShape(Circle())
                     .circularGradientOutline()
             }
@@ -476,8 +476,8 @@ struct MediaInfoView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 6)
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(15)
+                    .background(.ultraThinMaterial)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
                     .gradientOutline()
                 }
                 
@@ -491,8 +491,8 @@ struct MediaInfoView: View {
                     }
                     .frame(maxWidth: 120)
                     .padding(.vertical, 6)
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(15)
+                    .background(.ultraThinMaterial)
+                    .clipShape(RoundedRectangle(cornerRadius: 15))
                     .gradientOutline()
                 }
                 
@@ -502,7 +502,7 @@ struct MediaInfoView: View {
                         .frame(width: 16, height: 16)
                         .foregroundColor(.primary)
                         .padding(6)
-                        .background(Color.gray.opacity(0.2))
+                        .background(.ultraThinMaterial)
                         .clipShape(Circle())
                         .circularGradientOutline()
                 }
@@ -514,12 +514,12 @@ struct MediaInfoView: View {
                 Text(NSLocalizedString("Why am I not seeing any episodes?", comment: ""))
                     .font(.caption)
                     .bold()
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.secondary)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 
                 Text(NSLocalizedString("The module provided only a single episode, this is most likely a movie, so we decided to make separate screens for these cases.", comment: ""))
                     .font(.caption)
-                    .foregroundColor(.gray)
+                    .foregroundStyle(.secondary)
                     .multilineTextAlignment(.leading)
                     .lineLimit(nil)
                     .fixedSize(horizontal: false, vertical: true)
@@ -851,7 +851,7 @@ struct MediaInfoView: View {
                 .frame(width: 16, height: 16)
                 .foregroundColor(.primary)
                 .padding(6)
-                .background(Color.gray.opacity(0.2))
+                .background(.ultraThinMaterial)
                 .clipShape(Circle())
                 .circularGradientOutline()
         }
@@ -867,7 +867,7 @@ struct MediaInfoView: View {
                 .frame(width: 16, height: 4)
                 .foregroundColor(.primary)
                 .padding(12)
-                .background(Color.gray.opacity(0.2))
+                .background(.ultraThinMaterial)
                 .clipShape(Circle())
                 .circularGradientOutline()
         }

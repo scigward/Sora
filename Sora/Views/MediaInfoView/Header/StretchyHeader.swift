@@ -34,7 +34,7 @@ struct StretchyHeaderView: View {
                                     .aspectRatio(contentMode: .fill)
                             } else {
                                 Rectangle()
-                                    .fill(Color.gray.opacity(0.3))
+                                    .fill(.ultraThinMaterial)
                             }
                         }
                             .onCompletion { result in
